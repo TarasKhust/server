@@ -9,7 +9,10 @@ import { TodosModule } from './todos/todos.module';
 import { Connection } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../config/configuration';
+import { ScheduleModule } from '@nestjs/schedule';
 import * as Joi from '@hapi/joi';
+import {BullModule} from "@nestjs/bull";
+import {EventEmitterModule} from "@nestjs/event-emitter";
 
 @Module({
   imports: [
@@ -30,6 +33,22 @@ import * as Joi from '@hapi/joi';
     }),
     UserModule,
     CatsModule,
+    EventEmitterModule.forRoot({
+      // set this to `true` to use wildcards
+      wildcard: false,
+      // the delimiter used to segment namespaces
+      delimiter: '.',
+      // set this to `true` if you want to emit the newListener event
+      newListener: false,
+      // set this to `true` if you want to emit the removeListener event
+      removeListener: false,
+      // the maximum amount of listeners that can be assigned to an event
+      maxListeners: 10,
+      // show event name in memory leak message when more than maximum amount of listeners is assigned
+      verboseMemoryLeak: false,
+      // disable throwing uncaughtException if an error event is emitted and it has no listeners
+      ignoreErrors: false,
+    }),
     MemberModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -43,7 +62,14 @@ import * as Joi from '@hapi/joi';
       autoLoadEntities: true,
     }),
     TodosModule,
-    CacheModule.register()
+    CacheModule.register(),
+    ScheduleModule.forRoot(),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

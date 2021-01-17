@@ -2,6 +2,8 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './all-exceptions.filter';
 import { ValidationPipe } from './validation/validation.pipe';
+import * as cookieParser from 'cookie-parser';
+import * as compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +12,12 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
+// somewhere in your initialization file
+  app.use(compression());
+
+
+// somewhere in your initialization file
+  app.use(cookieParser());
   /**
    * Global Validation rules
    */
