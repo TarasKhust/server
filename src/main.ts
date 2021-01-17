@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
   /**
-   * Globbal Validation rulez
+   * Global Validation rules
    */
   // app.useGlobalPipes(new ValidationPipe());
 

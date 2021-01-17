@@ -9,11 +9,12 @@ import {
   ValidationPipe,
   UsePipes,
   Query,
-  ParseIntPipe, ParseBoolPipe, ParseArrayPipe
+  ParseIntPipe, ParseBoolPipe, ParseArrayPipe, UseInterceptors, CacheInterceptor, ClassSerializerInterceptor
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import {UserEntity} from "./dto/serialize.dto";
 
 @Controller('user')
 export class UserController {
@@ -28,9 +29,16 @@ export class UserController {
 
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
+  // findAll() {
+  //   return this.userService.findAll();
+  // }
+  findOn(): UserEntity {
+    return new UserEntity({
+      id: 1,
+      firstName: 'Kamil',
+      lastName: 'Mysliwiec',
+      password: 'password',
+    })}
 
   @Get()
   findByIds(
@@ -41,6 +49,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseInterceptors(ClassSerializerInterceptor)
   findOne(
       @Param('id', ParseIntPipe) id: number,
       @Query('sort', ParseBoolPipe) sort: boolean,
