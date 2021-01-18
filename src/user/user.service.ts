@@ -11,6 +11,19 @@ export class UserService {
     private usersRepository: Repository<User>,
   ) {}
 
+  private readonly users = [
+    {
+      userId: 1,
+      username: 'john',
+      password: 'changeme',
+    },
+    {
+      userId: 2,
+      username: 'maria',
+      password: 'guess',
+    },
+  ];
+
   createBulk(
       @Body(new ParseArrayPipe({ items: CreateUserDto }))
           createUserDtos: CreateUserDto[],
@@ -28,5 +41,9 @@ export class UserService {
 
   async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
+  }
+
+  async findOnes(username: string): Promise<{ password: string; userId: number; username: string }> {
+    return this.users.find(user => user.username === username);
   }
 }

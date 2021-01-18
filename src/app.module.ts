@@ -13,6 +13,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import * as Joi from '@hapi/joi';
 import {BullModule} from "@nestjs/bull";
 import {EventEmitterModule} from "@nestjs/event-emitter";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import {EventEmitterModule} from "@nestjs/event-emitter";
         port: 6379,
       },
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
