@@ -30,20 +30,20 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file) {
-    console.log(file);
-  }
+  // @UseInterceptors(FileInterceptor('file'))
+  // uploadFile(@UploadedFile() file) {
+  //   console.log(file);
+  // }
   @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createUserDto: CreateUserDto) {
     return 'This action adds a new user';
     // return this.userService.create(createUserDto);
   }
 
-  @Cron('45 * * * * *')
-  handleCron() {
-    console.log('Called when the current second is 45');
-  }
+  // @Cron('45 * * * * *')
+  // handleCron() {
+  //   console.log('Called when the current second is 45');
+  // }
 
 
   @Get()
