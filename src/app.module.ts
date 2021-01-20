@@ -14,6 +14,7 @@ import * as Joi from '@hapi/joi';
 import {BullModule} from "@nestjs/bull";
 import {EventEmitterModule} from "@nestjs/event-emitter";
 import { AuthModule } from './auth/auth.module';
+import { CaslModule } from './casl/casl.module';
 
 @Module({
   imports: [
@@ -72,6 +73,7 @@ import { AuthModule } from './auth/auth.module';
       },
     }),
     AuthModule,
+    CaslModule,
   ],
   controllers: [AppController],
   providers: [AppService],

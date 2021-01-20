@@ -1,6 +1,7 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
-import { RolesGuard } from '../roles.guard';
+import {RolesGuard} from "../role.guard";
+
 
 function ApiBearerAuth() {
   return undefined;

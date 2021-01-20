@@ -13,12 +13,13 @@ import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { ValidationPipe } from '../validation/validation.pipe';
 import { ParseIntPipe } from '../validation/parse-int.pipe';
-import { RolesGuard } from '../roles.guard';
-import { Roles } from '../roles.decorator';
+import { Roles } from '../decorators/roles.decorator';
 import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 import { TimeoutInterceptor } from '../interceptor/timeout.interceptor';
 import { User } from '../decorators/user.decorator';
 import { Auth } from '../decorators/auth.decorator';
+import { Role } from "../enums/role.enum";
+import { RolesGuard } from "../role.guard";
 
 @Controller('cats')
 @UseGuards(RolesGuard)
@@ -28,7 +29,7 @@ export class CatsController {
 
   @Post()
   @UseInterceptors(TimeoutInterceptor)
-  @Roles('admin')
+  @Roles(Role.Admin)
   async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
   }
