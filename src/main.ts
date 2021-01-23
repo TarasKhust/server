@@ -12,16 +12,16 @@ import * as rateLimit from 'express-rate-limit';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true});
-  app.use(
-      rateLimit({
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100, // limit each IP to 100 requests per windowMs
-      }),
-  );
+  // app.use(
+  //     rateLimit({
+  //       windowMs: 15 * 60 * 1000, // 15 minutes
+  //       max: 100, // limit each IP to 100 requests per windowMs
+  //     }),
+  // );
   app.use(cookieParser());
-  app.use(csrf());
+  // app.use(csrf());
 
-  app.use(helmet());
+    app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }));
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   app.useGlobalPipes(new ValidationPipe());

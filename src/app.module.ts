@@ -15,6 +15,24 @@ import {BullModule} from "@nestjs/bull";
 import {EventEmitterModule} from "@nestjs/event-emitter";
 import { AuthModule } from './auth/auth.module';
 import { CaslModule } from './casl/casl.module';
+import {GraphQLModule} from "@nestjs/graphql";
+import { VpsModule } from './vps/vps.module';
+
+// const configGraph = {
+//   typePaths: ['./**/*.graphql'],
+//   definitionsFactory.generate({
+//     typePaths: ['./src/**/*.graphql'],
+//     path: join(process.cwd(), 'src/graphql.ts'),
+//     outputAs: 'class',
+//     emitTypenameField: true,
+//     skipResolverArgs: true,
+//     watch: true,
+//   }),
+//   definitions: {
+//     // path: join(process.cwd(), 'src/graphql.ts'),
+//     outputAs: 'class',
+//   },
+// }
 
 @Module({
   imports: [
@@ -24,17 +42,31 @@ import { CaslModule } from './casl/casl.module';
       isGlobal: true,
       cache: true,
       load: [configuration],
-    }),
-    ConfigModule.forRoot({
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
-          .valid('development', 'production', 'test', 'provision')
-          .default('development'),
+            .valid('development', 'production', 'test', 'provision')
+            .default('development'),
         PORT: Joi.number().default(3000),
       }),
     }),
-    UserModule,
-    CatsModule,
+    GraphQLModule.forRoot({
+      debug: true,
+      playground: true,
+      installSubscriptionHandlers: true,
+      autoSchemaFile: true,
+      sortSchema: true,
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'tarasrushchak',
+      password: 'root',
+      database: 'postgres',
+      synchronize: true,
+
+      autoLoadEntities: true,
+    }),
     EventEmitterModule.forRoot({
       // set this to `true` to use wildcards
       wildcard: false,
@@ -51,19 +83,6 @@ import { CaslModule } from './casl/casl.module';
       // disable throwing uncaughtException if an error event is emitted and it has no listeners
       ignoreErrors: false,
     }),
-    MemberModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'tarasrushchak',
-      password: 'root',
-      database: 'postgres',
-      synchronize: true,
-
-      autoLoadEntities: true,
-    }),
-    TodosModule,
     CacheModule.register(),
     ScheduleModule.forRoot(),
     BullModule.forRoot({
@@ -72,8 +91,13 @@ import { CaslModule } from './casl/casl.module';
         port: 6379,
       },
     }),
+    TodosModule,
+    MemberModule,
+    UserModule,
+    CatsModule,
     AuthModule,
     CaslModule,
+    VpsModule
   ],
   controllers: [AppController],
   providers: [AppService],
