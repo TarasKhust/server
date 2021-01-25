@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { CaslModule } from './casl/casl.module';
 import {GraphQLModule} from "@nestjs/graphql";
 import { VpsModule } from './vps/vps.module';
+import { LoggerModule } from './logger/logger.module';
 
 // const configGraph = {
 //   typePaths: ['./**/*.graphql'],
@@ -97,7 +98,8 @@ import { VpsModule } from './vps/vps.module';
     CatsModule,
     AuthModule,
     CaslModule,
-    VpsModule
+    VpsModule,
+    LoggerModule
   ],
   controllers: [AppController],
   providers: [AppService],

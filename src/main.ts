@@ -8,10 +8,22 @@ import * as session from 'express-session';
 import * as helmet from 'helmet';
 import * as csrf from 'csurf';
 import * as rateLimit from 'express-rate-limit';
+import {PinoLoggerService} from "./logger/pino-logger.service";
+import {ASYNC_STORAGE} from "./logger/logger.constants";
+import { v4 as uuid4 } from "uuid"
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true});
+  const app = await NestFactory.create(AppModule, { cors: true, logger: false});
+  app.use((req, res, next) => {
+    const asyncLocalStorage = app.get(ASYNC_STORAGE)
+    const traceId = req.headers['x-request-id'] || uuid4();
+    const store = new Map().set('traceId', traceId)
+    asyncLocalStorage.run(store, () => {
+      next()
+    })
+  })
+  app.useLogger(app.get(PinoLoggerService))
   // app.use(
   //     rateLimit({
   //       windowMs: 15 * 60 * 1000, // 15 minutes
