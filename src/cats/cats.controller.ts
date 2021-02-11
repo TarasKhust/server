@@ -20,6 +20,7 @@ import { User } from '../decorators/user.decorator';
 import { Auth } from '../decorators/auth.decorator';
 import { Role } from "../enums/role.enum";
 import { RolesGuard } from "../role.guard";
+import {ApiOperation, ApiResponse} from "@nestjs/swagger";
 
 @Controller('cats')
 @UseGuards(RolesGuard)
@@ -28,12 +29,18 @@ export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create cat' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
   @UseInterceptors(TimeoutInterceptor)
   @Roles(Role.Admin)
   async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'The found record',
+  })
   @Get('users')
   @Get()
   async findAll(

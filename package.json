@@ -30,6 +30,7 @@
     "generateTypeGraphQl": "ts-node generate-typings"
   },
   "dependencies": {
+    "@apollo/federation": "^0.21.0",
     "@casl/ability": "^5.1.2",
     "@hapi/joi": "^17.1.1",
     "@nestjs/bull": "^0.3.1",
@@ -40,10 +41,11 @@
     "@nestjs/graphql": "^7.9.8",
     "@nestjs/jwt": "^7.2.0",
     "@nestjs/mapped-types": "0.1.1",
+    "@nestjs/microservices": "^7.6.12",
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "7.6.4",
     "@nestjs/schedule": "^0.4.1",
-    "@nestjs/swagger": "^4.7.9",
+    "@nestjs/swagger": "^4.7.12",
     "@nestjs/typeorm": "^7.1.5",
     "@types/pino": "^6.3.5",
     "@types/uuid": "^8.3.0",

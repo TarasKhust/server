@@ -11,10 +11,11 @@ import * as rateLimit from 'express-rate-limit';
 import {PinoLoggerService} from "./logger/pino-logger.service";
 import {ASYNC_STORAGE} from "./logger/logger.constants";
 import { v4 as uuid4 } from "uuid"
+import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true, logger: false});
+  const app = await NestFactory.create(AppModule, { cors: true, logger: true});
   app.use((req, res, next) => {
     const asyncLocalStorage = app.get(ASYNC_STORAGE)
     const traceId = req.headers['x-request-id'] || uuid4();
@@ -40,6 +41,15 @@ async function bootstrap() {
   app.enableCors();
 // somewhere in your initialization file
   app.use(compression());
+
+  const config = new DocumentBuilder()
+      .setTitle('Cats example')
+      .setDescription('The cats API description')
+      .setVersion('1.0')
+      .addTag('cats')
+      .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
 
   // app.use(
