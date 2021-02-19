@@ -2,13 +2,18 @@ import {Body, Injectable, ParseArrayPipe} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
-import {CreateUserDto} from "./dto/create-user.dto";
+import { CreateUserDto } from "./dto/create-user.dto";
+import * as jwt from 'jsonwebtoken';
+
+import { UserEntity } from './user1.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private userRepo: Repository<UserEntity>,
   ) {}
 
   private readonly users = [
@@ -45,5 +50,17 @@ export class UserService {
 
   async findOnes(username: string): Promise<{ password: string; userId: number; username: string }> {
     return this.users.find(user => user.username === username);
+  }
+
+  createToken({ id, email }: UserEntity) {
+    return jwt.sign({ id, email }, 'secret');
+  }
+
+  createUser(email: string) {
+    return this.userRepo.create({ email }).save();
+  }
+
+  getUserByEmail(email: string) {
+    return this.userRepo.findOne({ email });
   }
 }
