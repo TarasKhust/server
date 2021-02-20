@@ -8,6 +8,7 @@ import configuration from '../config/configuration';
 import { ScheduleModule } from '@nestjs/schedule';
 import * as Joi from '@hapi/joi';
 import { GraphQLModule } from "@nestjs/graphql";
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { GraphQLModule } from "@nestjs/graphql";
     }),
     CacheModule.register(),
     ScheduleModule.forRoot(),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
