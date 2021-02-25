@@ -1,4 +1,4 @@
-import { Int, Field } from '@nestjs/graphql';
+import { Int, Field } from "@nestjs/graphql";
 
 @Object()
 export class CreateUserInput {
@@ -7,5 +7,4 @@ export class CreateUserInput {
 
   @Field()
   email: number;
-
 }
