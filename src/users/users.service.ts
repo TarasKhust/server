@@ -1,22 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "./entities/user.entity";
+import { Repository } from "typeorm";
+import * as jwt from "jsonwebtoken";
 
 @Injectable()
 export class UsersService {
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user';
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) {
+
+  }
+
+  createUser(email: string) {
+    return this.userRepo.create({ email }).save();
+  }
+
+  crateToken({ id, email }: User) {
+    return jwt.sign({ id, email }, "secret");
   }
 
   findAll() {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  getUserByEmail(email: string) {
+    return this.userRepo.findOne({ email });
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
+  update(id: number) {
     return `This action updates a #${id} user`;
   }
 
