@@ -4,4 +4,5 @@ export const graphqlConfig = {
     playground: true,
     installSubscriptionHandlers: true,
     autoSchemaFile: true,
+    context: ({ req }) => ({ headers: req.headers }),
 };

@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import * as jwt from "jsonwebtoken";
 import { UserRepository } from "./user.repository";
+import { CreateUserInput } from "./dto/create-user.input";
 
 ;
 
@@ -14,6 +15,12 @@ export class UsersService {
 
   ) {
 
+  }
+
+  createUser2Input(createUserInput: CreateUserInput) {
+    const { email, password } = createUserInput;
+
+    return this.userRepository.create({ email, password }).save();
   }
 
   createUser(email: string) {
