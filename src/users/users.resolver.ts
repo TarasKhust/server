@@ -21,12 +21,23 @@ export class UsersResolver {
   }
 
   @Mutation(() => UserType)
-  async login(@Args("email") email: string, @Args("password") password: string) {
-    const user = await this.usersService.getUserByEmail(email, password);
+  createUser(@Args("email") email: string, @Args("password") password: string): Promise<User> {
+    return this.usersService.createUser(email, password);
+  }
 
-      if (!user) {
-        throw new Error("email is Does Not Exist");
-      }
+  @Mutation(() => UserType)
+  async login(@Args("email") email: string, @Args("password") password: string) {
+    const user = await this.usersService.getUserByEmail(email);
+
+    if (!user) {
+       throw new Error("email is Does Not Exist");
+    }
+
+    const isPassword = await this.usersService.validatePassword(password, user?.salt, user.password);
+
+    if (!isPassword) {
+      throw new Error("password is Does Not Exist");
+    }
 
       const token = this.usersService.crateToken(user);
 

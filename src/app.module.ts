@@ -11,7 +11,8 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { UsersModule } from "./users/users.module";
 import { graphqlConfig } from "../config/graphql.config";
 import { typeormConfig } from "../config/typeorm.config";
-import { CatalogModule } from './catalog/catalog.module';
+import { CatalogModule } from "./catalog/catalog.module";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { CatalogModule } from './catalog/catalog.module';
     ScheduleModule.forRoot(),
     UsersModule,
     CatalogModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
