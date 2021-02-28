@@ -9,4 +9,16 @@ export class UserType {
     @Field()
     @IsEmail()
     email: string;
+
+    @Field()
+    password: string;
+
+    @Field()
+    token: string;
+
+    @Field()
+    status: boolean;
+
+    @Field()
+    message: string;
 }

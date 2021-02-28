@@ -16,37 +16,54 @@ export class UsersResolver {
     return user;
   }
 
-  @Query(() => String)
-  async getEmail(@Args("email") email: string) {
-    const { getUserByEmail } = this.usersService;
-    await getUserByEmail(email);
-    return email;
-  }
+  /*
+   * @Query(() => UserType)
+   * async getEmail(@Args("email") email: string) {
+   *   const { getUserByEmail } = this.usersService;
+   *   await getUserByEmail(email);
+   *   return email;
+   * }
+   *
+   * @Mutation(() => String)
+   * async newUser(@Args("email") email: string) {
+   *   let user = await this.usersService.getUserByEmail(email);
+   *
+   *   if (!user) {
+   *     user = await this.usersService.createUser(email);
+   *   }
+   *
+   *   return user;
+   * }
+   */
 
-  @Mutation(() => String)
-  async newUser(@Args("email") email: string) {
-    let user = await this.usersService.getUserByEmail(email);
+  /*
+   * @Mutation(() => UserType)
+   * async login(@Args("email") email: string, @Args("password") password: string) {
+   *   let user = await this.usersService.getUserByEmail(email, password);
+   *
+   *   if (!user) {
+   *     user = await this.usersService.createUser(email, password);
+   *   }
+   *
+   *   return this.usersService.crateToken(user);
+   * }
+   */
 
-    if (!user) {
-      user = await this.usersService.createUser(email);
-    }
-
-    return user;
-  }
-
-  @Mutation(() => String)
-  async createUser(@Args("createUserInput") createUserInput: CreateUserInput) {
+  @Mutation(() => UserType)
+  async signUp(@Args("createUserInput") createUserInput: CreateUserInput) {
     return this.usersService.createUser2Input(createUserInput);
   }
 
-  @Mutation(() => String)
-  async login(@Args("email") email: string) {
-    let user = await this.usersService.getUserByEmail(email);
+  @Mutation(() => UserType)
+  async login(@Args("email") email: string, @Args("password") password: string) {
+    const user = await this.usersService.getUserByEmail(email, password);
 
-    if (!user) {
-      user = await this.usersService.createUser(email);
-    }
+      if (!user) {
+        throw new Error("email is Does Not Exist");
+      }
 
-    return this.usersService.crateToken(user);
+      const token = this.usersService.crateToken(user);
+
+    return { token: token, status: true };
   }
 }

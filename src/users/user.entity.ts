@@ -5,9 +5,9 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("text")
+  @Column({ nullable: true })
   email: string;
 
-  @Column()
-  password: number;
+  @Column({ nullable: true })
+  password: string;
 }
