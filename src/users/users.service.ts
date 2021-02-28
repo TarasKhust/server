@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import * as jwt from "jsonwebtoken";
 import { UserRepository } from "./user.repository";
-import { CreateUserInput } from "./dto/create-user.input";
 
 @Injectable()
 export class UsersService {
@@ -13,12 +12,6 @@ export class UsersService {
 
   ) {
 
-  }
-
-  createUser2Input(createUserInput: CreateUserInput) {
-    const { email, password } = createUserInput;
-
-    return this.userRepository.create({ email }).save();
   }
 
   createUser(email: string, password: string) {
@@ -31,5 +24,9 @@ export class UsersService {
 
   getUserByEmail(email: string, password: string) {
     return this.userRepository.findOne({ email, password });
+  }
+
+  async getUsers(): Promise<User[]> {
+    return this.userRepository.find();
   }
 }
