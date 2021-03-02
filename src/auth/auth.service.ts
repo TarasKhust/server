@@ -1,10 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
-import { User } from "../users/user.entity";
-import * as jwt from "jsonwebtoken";
 import { UserRepository } from "../users/user.repository";
 import { AuthHelper } from "./auth.helper";
+import { JwtDto } from "./dto/jwt.dto";
 
 @Injectable()
 export class AuthService {
@@ -41,12 +40,18 @@ export class AuthService {
             throw new Error("invalid password");
         }
 
-        const token = AuthService.crateToken(user);
+        const token = this.signToken(user.id);
 
         return { token: token, status: true };
     }
 
-    private static async crateToken({ id, email }: User) {
-        return jwt.sign({ id, email }, "secret");
+    private signToken(id: string) {
+        const payload: JwtDto = { userId: id };
+
+        return this.jwtService.sign(payload);
+    }
+
+    public async validateUser(userId: string) {
+        return this.usersService.getUserById(userId);
     }
 }

@@ -18,7 +18,7 @@ import { UserRepository } from "../users/user.repository";
     TypeOrmModule.forFeature([UserRepository]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: "60s" },
+      signOptions: { expiresIn: "3600s" },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, JwtAuthGuard, AuthResolver],
