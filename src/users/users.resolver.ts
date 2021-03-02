@@ -20,9 +20,4 @@ export class UsersResolver {
    getUser() {
       return this.usersService.getUsers();
   }
-
-  @Mutation(() => UserType)
-  createUser(@CtxUser() user: User, @Args("email") email: string, @Args("password") password: string): Promise<User> {
-    return this.usersService.createUser(email, password);
-  }
 }

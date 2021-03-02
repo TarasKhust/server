@@ -10,7 +10,4 @@ export class User extends BaseEntity {
 
   @Column({ type: "text", default: "" })
   password: string;
-
-  @Column({ type: "text", default: "" })
-  salt: string;
 }

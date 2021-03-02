@@ -1,31 +1,20 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { UserType } from "../users/dto/user-type";
 import { AuthService } from "./auth.service";
-import { UsersService } from "../users/users.service";
-import { NotFoundException } from "@nestjs/common";
+import { User } from "../users/user.entity";
+import { CtxUser } from "../decorators/ctx-user.decorator";
 
 @Resolver()
 export class AuthResolver {
-    constructor(private readonly authService: AuthService,
-                private readonly usersService: UsersService) {
+    constructor(private readonly authService: AuthService) {}
+
+    @Mutation(() => UserType)
+    async login(@Args("email") email: string, @Args("password") password: string) {
+        return this.authService.login(email, password);
     }
 
     @Mutation(() => UserType)
-   public async login(@Args("email") email: string, @Args("password") password: string) {
-        const user = await this.usersService.getUserByEmail(email);
-
-        if (!user) {
-            throw new NotFoundException(`User with email ${email} does not exist`);
-        }
-
-        const isPassword = await this.usersService.validatePassword(password, user?.salt, user.password);
-
-        if (!isPassword) {
-            throw new Error("invalid password");
-        }
-
-        const token = this.usersService.crateToken(user);
-
-        return { token: token, status: true };
+    async createUser(@CtxUser() user: User, @Args("email") email: string, @Args("password") password: string): Promise<User> {
+        return this.authService.createUser(email, password);
     }
 }

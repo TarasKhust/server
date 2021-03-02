@@ -13,25 +13,6 @@ export class UsersService {
   ) {
   }
 
-  async createUser(email: string, password: string) {
-    const salt = await bcrypt.genSalt();
-    const hashPass = await this.hashPassword(password, salt);
-    return this.userRepository.create({ email, password: hashPass, salt }).save();
-  }
-
-  async hashPassword(password: string, salt: string): Promise<string> {
-    return bcrypt.hash(password, salt);
-  }
-
-  async validatePassword(password: string, salt: string, userPass): Promise<boolean> {
-    const hash = await this.hashPassword(password, salt);
-    return hash === userPass;
-  }
-
-  async crateToken({ id, email }: User) {
-    return jwt.sign({ id, email }, "secret");
-  }
-
   async getUserByEmail(email: string) {
     return this.userRepository.findOne({ email });
   }

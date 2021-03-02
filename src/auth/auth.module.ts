@@ -8,11 +8,14 @@ import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./constants";
 import { JwtAuthGuard } from "../guards/jwt-auth.guard";
 import { AuthResolver } from "./auth.resolver";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { UserRepository } from "../users/user.repository";
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
+    TypeOrmModule.forFeature([UserRepository]),
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: "60s" },
