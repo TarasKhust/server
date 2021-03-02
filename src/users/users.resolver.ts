@@ -2,8 +2,9 @@ import { Resolver, Query, Mutation, Args, Int, Context } from "@nestjs/graphql";
 import { UsersService } from "./users.service";
 import { UserType } from "./dto/user-type";
 import { UseGuards } from "@nestjs/common";
-import { AuthGuard } from "./auth.guard";
 import { User } from "./user.entity";
+import { JwtAuthGuard } from "../guards/jwt-auth.guard";
+import { AuthGuard } from "../guards/auth.guard";
 
 @Resolver(of => UserType)
 export class UsersResolver {
@@ -20,6 +21,7 @@ export class UsersResolver {
       return this.usersService.getUsers();
   }
 
+  @UseGuards(new AuthGuard())
   @Mutation(() => UserType)
   createUser(@Args("email") email: string, @Args("password") password: string): Promise<User> {
     return this.usersService.createUser(email, password);

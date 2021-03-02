@@ -28,11 +28,11 @@ export class UsersService {
     return hash === userPass;
   }
 
-  crateToken({ id, email }: User) {
+  async crateToken({ id, email }: User) {
     return jwt.sign({ id, email }, "secret");
   }
 
-  getUserByEmail(email: string) {
+  async getUserByEmail(email: string) {
     return this.userRepository.findOne({ email });
   }
 
