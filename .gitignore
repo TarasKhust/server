@@ -22,6 +22,7 @@ dist/
 # Maven
 target/
 dist/
+package-lock.json
 
 # JetBrains IDE
 .idea/
@@ -47,4 +48,6 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+./dist/
+./config/
 
