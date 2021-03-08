@@ -21,4 +21,7 @@ export class UserType {
 
     @Field()
     message: string;
+
+    @Field()
+    redirect: string;
 }

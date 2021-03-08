@@ -47,6 +47,7 @@ export class AuthService {
             status: true,
             id: user.id,
             email: user.email,
+            redirect: "/member",
         };
     }
 
