@@ -1,3 +1,3 @@
 export const jwtConstants = {
-    secret: "BEEHIVE_SECRET_987-1000-?",
+    secret: "topSecret2223ollals1233d",
 };

@@ -7,6 +7,7 @@ import {
 } from "@nestjs/common";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import * as jwt from "jsonwebtoken";
+import { jwtConstants } from "../auth/constants";
 
 @Injectable()
 export class GqlAuthGuard implements CanActivate {
@@ -29,7 +30,7 @@ export class GqlAuthGuard implements CanActivate {
         const token = auth.split(" ")[1];
 
         try {
-            const decoded = jwt.verify(token, "secret");
+            const decoded = jwt.verify(token, jwtConstants.secret);
             return decoded;
         } catch (err) {
             const message = `Token error: ${ err.message || err.name}`;

@@ -14,14 +14,14 @@ import { UserRepository } from "../users/user.repository";
 @Module({
   imports: [
     UsersModule,
-    PassportModule,
+    PassportModule.register({ defaultStrategy: "jwt" }),
     TypeOrmModule.forFeature([UserRepository]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: "3600s" },
+      signOptions: { expiresIn: "7d" },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, JwtAuthGuard, AuthResolver],
-  exports: [AuthService],
+  providers: [AuthService, JwtStrategy, AuthResolver],
+  exports: [AuthService, JwtStrategy, PassportModule],
 })
 export class AuthModule {}

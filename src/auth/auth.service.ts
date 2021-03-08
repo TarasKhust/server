@@ -42,7 +42,12 @@ export class AuthService {
 
         const token = this.signToken(user.id);
 
-        return { token: token, status: true };
+        return {
+            token: token,
+            status: true,
+            id: user.id,
+            email: user.email,
+        };
     }
 
     private signToken(id: string) {
