@@ -13,6 +13,7 @@ import { graphqlConfig } from "../config/graphql.config";
 import { typeormConfig } from "../config/typeorm.config";
 import { CatalogModule } from "./catalog/catalog.module";
 import { AuthModule } from "./auth/auth.module";
+import { CategoryModule } from "./category/category.module";
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { AuthModule } from "./auth/auth.module";
     UsersModule,
     CatalogModule,
     AuthModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
