@@ -4,13 +4,13 @@ import { Category } from "./entities/category.entity";
 import { CreateCategoryInput } from "./dto/create-category.input";
 import { UpdateCategoryInput } from "./dto/update-category.input";
 
-@Resolver(() => Category)
+@Resolver(of => Category)
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Mutation(() => Category)
-  createCategory(@Args("createCategoryInput") createCategoryInput: CreateCategoryInput) {
-    return this.categoryService.create(createCategoryInput);
+  createCategory(@Args("createCategoryInput") createCategoryInput: CreateCategoryInput): Promise<CreateCategoryInput> {
+    return this.categoryService.createCategory(createCategoryInput);
   }
 
   @Query(() => [Category], { name: "category" })
@@ -19,7 +19,7 @@ export class CategoryResolver {
   }
 
   @Query(() => Category, { name: "category" })
-  findOne(@Args("id", { type: () => Int }) id: number) {
+  findOne(@Args("id", { type: () => String }) id: string) {
     return this.categoryService.findOne(id);
   }
 
@@ -29,7 +29,7 @@ export class CategoryResolver {
   }
 
   @Mutation(() => Category)
-  removeCategory(@Args("id", { type: () => Int }) id: number) {
+  removeCategory(@Args("id", { type: () => String }) id: string) {
     return this.categoryService.remove(id);
   }
 }

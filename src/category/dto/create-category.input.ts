@@ -2,8 +2,8 @@ import { InputType, Int, Field } from "@nestjs/graphql";
 
 @InputType()
 export class CreateCategoryInput {
-  @Field(() => Int)
-  id: number;
+  @Field(() => String)
+  id: string;
 
   @Field(() => String)
   name: string;
@@ -11,12 +11,12 @@ export class CreateCategoryInput {
   @Field(() => String)
   description: string;
 
-  @Field(() => Array)
+  @Field(type => String)
   metaDataTag: string[];
 
-  @Field(() => Array)
+  @Field(type => String)
   metaDataTagKeyword: string[];
 
-  @Field(() => Array)
+  @Field(type => String)
   tag: string[];
 }

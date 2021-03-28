@@ -1,22 +1,30 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Field, ObjectType } from "@nestjs/graphql";
 
+@ObjectType()
 @Entity()
-export class Category extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+export class Category {
+  @Field(type => String)
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @Column({ type: "text", default: "" })
+  @Field(type => String)
+  @Column()
   name: string;
 
-  @Column({ type: "text", default: "" })
-  description: string;
+  @Field(type => String)
+  @Column()
+  description: string
 
-  @Column({ type: "text", default: "" })
+  @Field(type => String)
+  @Column("simple-array")
   metaDataTag: string[]
 
-  @Column({ type: "text", default: "" })
+  @Field(type => String)
+  @Column("simple-array")
   metaDataTagKeyword: string[]
 
-  @Column({ type: "text", default: "" })
+  @Field(type => String)
+  @Column("simple-array")
   tag: string[]
 }
