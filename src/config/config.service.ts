@@ -27,7 +27,7 @@ class ConfigService {
 
     public isProduction() {
         const mode = this.getValue("MODE", false);
-        return mode != "DEV";
+        return { rejectUnauthorized: mode != "DEV" };
     }
 
     public getTypeOrmConfig(): TypeOrmModuleOptions {
@@ -50,6 +50,7 @@ class ConfigService {
                 migrationsDir: "src/migration",
             },
 
+            ssl: this.isProduction(),
         };
     }
 }
