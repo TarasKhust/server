@@ -4,21 +4,20 @@ import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Connection } from "typeorm";
 import { ConfigModule } from "@nestjs/config";
-import configuration from "../config/configuration";
+import configuration from "./config/configuration";
 import { ScheduleModule } from "@nestjs/schedule";
 import * as Joi from "@hapi/joi";
 import { GraphQLModule } from "@nestjs/graphql";
 import { UsersModule } from "./users/users.module";
-import { graphqlConfig } from "../config/graphql.config";
-import { typeormConfig } from "../config/typeorm.config";
+import { graphqlConfig } from "./config/graphql.config";
 import { CatalogModule } from "./catalog/catalog.module";
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";
+import { configService } from "./config/config.service";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ".development.env",
       ignoreEnvFile: true,
       isGlobal: true,
       cache: true,
@@ -31,7 +30,7 @@ import { CategoryModule } from "./category/category.module";
       }),
     }),
     GraphQLModule.forRoot(graphqlConfig),
-    TypeOrmModule.forRoot(typeormConfig),
+    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     CacheModule.register(),
     ScheduleModule.forRoot(),
     UsersModule,

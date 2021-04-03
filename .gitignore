@@ -21,7 +21,6 @@ dist/
 
 # Maven
 target/
-dist/
 package-lock.json
 
 # JetBrains IDE
@@ -49,5 +48,5 @@ Thumbs.db
 *.mov
 *.wmv
 ./dist/
-./config/
 tmp/
+variables.env
