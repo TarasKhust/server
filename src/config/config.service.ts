@@ -50,7 +50,6 @@ class ConfigService {
                 migrationsDir: "src/migration",
             },
 
-            ssl: this.isProduction(),
         };
     }
 }
