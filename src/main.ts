@@ -17,7 +17,7 @@ async function bootstrap() {
         app.enableCors();
         logger.log("cors is enabled");
     } else {
-        app.enableCors({ origin: "https://servercrm.herokuapp.com/graphql" });
+        app.enableCors({ origin: "http://localhost:9000" });
         logger.log("Accepting requests from origin https://servercrm.herokuapp.com/graphql");
     }
 
