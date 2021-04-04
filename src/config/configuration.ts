@@ -22,7 +22,7 @@ export const databaseConfigDev = (): object => {
     databaseConfigDev: {
       host: process.env.POSTGRES_HOST_DEV,
       username: process.env.POSTGRES_USER_DEV,
-      password: process.env.POSTGRES_USER_DEV,
+      password: process.env.POSTGRES_PASSWORD_DEV,
       database: process.env.POSTGRES_DATABASE_DEV,
       port: process.env.POSTGRES_PORT_DEV,
     },
