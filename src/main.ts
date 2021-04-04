@@ -3,15 +3,24 @@ import { AppModule } from "./app.module";
 import * as cookieParser from "cookie-parser";
 import * as compression from "compression";
 import * as helmet from "helmet";
-import { ValidationPipe } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule, { cors: true, logger: true });
+    const logger = new Logger("bootstrap");
+    const app = await NestFactory.create(AppModule, { logger: true });
     app.use(cookieParser());
     app.useGlobalPipes(new ValidationPipe());
 
     app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === "production") ? undefined : false }));
-    app.enableCors();
+
+    if (process.env.NODE_ENV === "development") {
+        app.enableCors();
+        logger.log("cors is enabled");
+    } else {
+        app.enableCors({ origin: "https://servercrm.herokuapp.com/graphql" });
+        logger.log("Accepting requests from origin https://servercrm.herokuapp.com/graphql");
+    }
+
     app.use(compression());
 
     await app.listen(process.env.PORT || 3000);
