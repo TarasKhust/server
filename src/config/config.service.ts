@@ -49,6 +49,10 @@ class ConfigService {
             cli: {
                 migrationsDir: "src/migration",
             },
+
+            ssl: {
+                rejectUnauthorized: false,
+            },
         };
     }
 }
