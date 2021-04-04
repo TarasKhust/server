@@ -49,4 +49,5 @@ Thumbs.db
 *.wmv
 ./dist/
 tmp/
-variables.env
+.env.development
+.env.production

@@ -1,12 +1,48 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 
-export const typeormConfig: TypeOrmModuleOptions = {
-    type: "postgres",
-    host: process.env.POSTGRES_HOST || "localhost",
-    port: 5432,
-    username: process.env.POSTGRES_USERNAME || "tarasrushchak",
-    password: process.env.POSTGRES_PASSWORD || "root",
-    database: process.env.POSTGRES_DATABASE || "postgres",
-    synchronize: true,
-    autoLoadEntities: true,
+export const typeormConfig = async (configService: ConfigService) => {
+    const development = configService.get("environment") === "development";
+    const { host, username, password, database, port } = configService.get("databaseConfig");
+    const { host: hostDev, username: usernameDev, password: passwordDev, database: databaseDev, port: portDev } = configService.get("databaseConfigDev");
+    console.log(configService.get("environment"));
+
+    const typeormConfigs: TypeOrmModuleOptions = {
+        type: "postgres",
+        host,
+        port,
+        username,
+        password,
+        database,
+        synchronize: false,
+        autoLoadEntities: true,
+        migrationsTableName: "migration",
+
+        migrations: ["src/migration/*.ts"],
+
+        cli: {
+            migrationsDir: "src/migration",
+        },
+
+        ssl: {
+            rejectUnauthorized: false,
+        },
+    };
+
+    const typeormConfigDev: TypeOrmModuleOptions = {
+        type: "postgres",
+        host: hostDev,
+        port: portDev,
+        username: usernameDev,
+        password: passwordDev,
+        database: databaseDev,
+        synchronize: true,
+        autoLoadEntities: true,
+    };
+
+    if (development) {
+        return typeormConfigDev;
+    }
+
+    return typeormConfigs;
 };

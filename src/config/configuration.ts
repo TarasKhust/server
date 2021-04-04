@@ -1,19 +1,30 @@
-import * as yaml from "js-yaml";
-import { join } from "path";
-import * as fs from "fs";
-
-const YAML_CONFIG_FILENAME = "config.yml";
-
-export const yamlConfig = () => {
-  return yaml.load(
-    fs.readFileSync(join(__dirname, YAML_CONFIG_FILENAME), "utf8"),
-  );
+export const configuration = () => {
+  return {
+    environment: process.env.NODE_ENV,
+    port: process.env.PORT,
+  };
 };
 
-export default () => ({
-  port: parseInt(process.env.PORT, 10) || 3000,
-  database: {
-    host: process.env.DATABASE_HOST,
-    port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
-  },
-});
+export const database = (): object => {
+  return {
+    databaseConfig: {
+      host: process.env.POSTGRES_HOST,
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DATABASE,
+      port: process.env.POSTGRES_PORT,
+    },
+  };
+};
+
+export const databaseConfigDev = (): object => {
+  return {
+    databaseConfigDev: {
+      host: process.env.POSTGRES_HOST_DEV,
+      username: process.env.POSTGRES_USER_DEV,
+      password: process.env.POSTGRES_USER_DEV,
+      database: process.env.POSTGRES_DATABASE_DEV,
+      port: process.env.POSTGRES_PORT_DEV,
+    },
+  };
+};
