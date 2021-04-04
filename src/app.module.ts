@@ -10,7 +10,6 @@ import * as Joi from "@hapi/joi";
 import { GraphQLModule } from "@nestjs/graphql";
 import { UsersModule } from "./users/users.module";
 import { graphqlConfig } from "./config/graphql.config";
-import { CatalogModule } from "./catalog/catalog.module";
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";
 import { configService } from "./config/config.service";
@@ -34,7 +33,6 @@ import { configService } from "./config/config.service";
     CacheModule.register(),
     ScheduleModule.forRoot(),
     UsersModule,
-    CatalogModule,
     AuthModule,
     CategoryModule,
   ],
