@@ -1,3 +1,3 @@
 export class JwtDto {
-    userId: string
+	userId: string;
 }

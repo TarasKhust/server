@@ -1,4 +1,4 @@
-import { ConfigService } from "@nestjs/config";
+import { ConfigService } from '@nestjs/config';
 
 /*
  * export const graphlConfig = {
@@ -11,12 +11,12 @@ import { ConfigService } from "@nestjs/config";
  */
 
 export const graphqlConfig = (configService: ConfigService) => {
-    const development = configService.get("environment") === "development";
-    return {
-        debug: development,
-        playground: development,
-        installSubscriptionHandlers: true,
-        autoSchemaFile: true,
-        context: ({ req }) => ({ headers: req.headers }),
-    };
+	const development = configService.get('environment') === 'development';
+	return {
+		debug: development,
+		playground: development,
+		installSubscriptionHandlers: true,
+		autoSchemaFile: true,
+		context: ({ req }) => ({ headers: req.headers }),
+	};
 };
