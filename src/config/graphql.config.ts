@@ -17,6 +17,6 @@ export const graphqlConfig = (configService: ConfigService) => {
 		playground: development,
 		installSubscriptionHandlers: true,
 		autoSchemaFile: true,
-		context: ({ req }) => ({ headers: req.headers }),
+		context: ({ req }: any) => ({ headers: req.headers }),
 	};
 };

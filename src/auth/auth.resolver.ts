@@ -17,7 +17,8 @@ export class AuthResolver {
 
 	@UseGuards(JwtAuthGuard)
 	@Mutation(() => UserType)
-	public async createUser(@CtxUser() user: User, @Args('email') email: string, @Args('password') password: string): Promise<User> {
+	public async createUser(@CtxUser() user: User, @Args('email') email: string, @Args('password')
+		password: string): Promise<User> {
 		return this.authService.createUser(email, password);
 	}
 }

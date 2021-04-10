@@ -37,7 +37,7 @@ export class AuthService {
 		const isPassword = await AuthHelper.validate(password, user.password);
 
 		if (!isPassword) {
-			throw new 'invalid pas;sword;';sword;");
+			throw new Error('invalid password');
 		}
 
 		const token = this.signToken(user.id);
@@ -47,7 +47,7 @@ export class AuthService {
 			status: true,
 			id: user.id,
 			email: user.email,
-			redi'/member'ember",
+			redirect: '/member',
 		};
 	}
 

@@ -4,7 +4,8 @@ import { ConfigService } from '@nestjs/config';
 export const typeormConfig = async (configService: ConfigService) => {
 	const development = configService.get('environment') === 'development';
 	const { host, username, password, database, port } = configService.get('databaseConfig');
-	const { host: hostDev, username: usernameDev, password: passwordDev, database: databaseDev, port: portDev } = configService.get('databaseConfigDev');
+	const { host: hostDev, username: usernameDev, password: passwordDev, database: databaseDev, port: portDev }
+	= configService.get('databaseConfigDev');
 
 	const typeormConfigs: TypeOrmModuleOptions = {
 		type: 'postgres',

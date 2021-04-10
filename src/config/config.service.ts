@@ -1,6 +1,7 @@
 // src/config/config.service.ts
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+// tslint:disable-next-line:no-var-requires
 require('dotenv').config();
 
 class ConfigService {
@@ -13,7 +14,7 @@ class ConfigService {
 			throw new Error(`config error - missing env.${key}`);
 		}
 
-		return value;
+		return <string>value;
 	}
 
 	public ensureValues(keys: string[]) {
