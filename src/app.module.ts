@@ -12,6 +12,9 @@ import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
 import { validationSchema } from './config/validation';
 import { typeormConfig } from './config/typeorm.config';
+import { ProductModule } from './product/product.module';
+import { ReviewModule } from './review/review.module';
+import { TopPageModule } from './top-page/top-page.module';
 
 @Module({
   imports: [
@@ -39,6 +42,9 @@ import { typeormConfig } from './config/typeorm.config';
 	UsersModule,
 	AuthModule,
 	CategoryModule,
+	ProductModule,
+	ReviewModule,
+	TopPageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

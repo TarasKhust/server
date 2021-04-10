@@ -15,6 +15,9 @@ async function bootstrap() {
 	const PORT = config.get('port');
 
 	logger.verbose(config.get('environment'));
+
+	app.setGlobalPrefix('api');
+
 	app.use(cookieParser());
 
 	app.useGlobalPipes(new ValidationPipe());

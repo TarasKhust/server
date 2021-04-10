@@ -1,12 +1,14 @@
-version: '3'
+version: '3.7'
 services:
   postgres:
     image: postgres
+    container_name: postgress
+    restart: always
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: tarasrushchak
-      POSTGRES_PASSWORD: root
+      POSTGRES_DATABASE_DEV: postgres
+      POSTGRES_USER_DEV: tarasrushchak
+      POSTGRES_PASSWORD_DEV: root
     volumes:
       - ./tmp/postgres:/var/lib/postgresql/data
