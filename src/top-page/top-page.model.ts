@@ -1,3 +1,6 @@
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
+
 export enum TopLevelCategory {
 	Courses,
 	Services,
@@ -5,33 +8,86 @@ export enum TopLevelCategory {
 	Products
 }
 
-export class TopPageModel {
-	_id: string;
+export class HhData {
+	@Field()
+	@Column()
+	count: number;
 
-	firstCategory: TopLevelCategory;
+	@Field()
+	@Column()
+	juniorSalary: number;
 
-	secondCategory: string;
+	@Field()
+	@Column()
+	middleSalary: number;
 
+	@Field()
+	@Column()
+	seniorSalary: number;
+}
+
+export class TopPageAdvantage {
+	@Field()
+	@Column()
 	title: string;
 
+	@Field()
+	@Column()
+	description: string;
+}
+
+@ObjectType()
+@Entity('top_page')
+export class TopPageModel extends BaseEntity {
+	@Field()
+	@PrimaryGeneratedColumn('uuid')
+	_id: string;
+
+	@Field()
+	@Column({ type: 'enum', enum: TopLevelCategory })
+	firstCategory: TopLevelCategory;
+
+	@Field()
+	@Column()
+	secondCategory: string;
+
+	@Field()
+	@Column({ unique: true })
+	alias: string;
+
+	@Field()
+	@Column()
+	title: string;
+
+	@Field()
+	@Column()
+	metaTitle: string;
+
+	@Field()
+	@Column()
+	metaDescription: string;
+
+	@Field()
+	@Column()
 	category: string;
 
-	hh?: {
-		count: number;
-		juniorSalary: number;
-		middleSalary: number;
-		seniorSalary: number;
-	};
+	@Field(() => HhData)
+	@Column(() => HhData)
+	hh?: HhData;
 
-	advantages: {
-		title: string;
-		description: string;
-	}[];
+	@Field(() => [TopPageAdvantage])
+	@Column({ type: 'simple-array' })
+	advantages: TopPageAdvantage[];
 
+	@Field()
+	@Column()
 	seoText: string;
 
+	@Field()
+	@Column()
 	tagsTitle: string;
 
+	@Field(() => [String])
+	@Column({ type: 'simple-array' })
 	tags: string[];
-
 }
