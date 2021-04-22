@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ProductEntity } from './product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 
 @Injectable()
@@ -13,7 +13,19 @@ export class ProductService {
 	}
 
 	async create(createProduct: CreateProductInput): Promise<ProductEntity> {
-		const newProduct = this.productRepository.create(createProduct);
+		const { vendor } = createProduct;
+
+		const getProductVendor = await this.productRepository.findOne({
+			where: {
+				vendor,
+			},
+		});
+
+		if (getProductVendor) {
+			throw new BadRequestException(`This ${vendor} already exist`);
+		}
+
+		const newProduct = await this.productRepository.create(createProduct);
 
 		return this.productRepository.save(newProduct);
 	}
@@ -28,5 +40,9 @@ export class ProductService {
 				id,
 			},
 		});
+	}
+
+	async deleteById(id: string): Promise<DeleteResult> {
+		return this.productRepository.delete(id);
 	}
 }
