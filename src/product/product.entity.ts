@@ -8,44 +8,44 @@ class ProductCharacteristic {
 }
 @ObjectType()
 @Entity('product')
-export class ProductModel extends BaseEntity {
-	@Field()
+export class ProductEntity extends BaseEntity {
+	@Field(() => String)
 	@PrimaryGeneratedColumn('uuid')
-	_id: string;
+	id: string;
 
-	@Field()
+	@Field(() => String)
 	@Column()
 	image: string;
 
-	@Field()
+	@Field(() => String)
 	@Column()
 	title: string;
 
-	@Field()
+	@Field(() => String)
 	@Column()
 	price: string;
 
-	@Field()
+	@Field(() => Number)
 	@Column()
 	oldPrice: number;
 
-	@Field()
+	@Field(() => Number)
 	@Column()
 	credit: number;
 
-	@Field()
+	@Field(() => Number)
 	@Column()
 	calculatedRating: number;
 
-	@Field()
+	@Field(() => String)
 	@Column()
 	description: string;
 
-	@Field()
+	@Field(() => String)
 	@Column()
 	advantages: string;
 
-	@Field()
+	@Field(() => String)
 	@Column()
 	disAdvantages: string;
 
