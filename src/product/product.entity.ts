@@ -1,11 +1,6 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-class ProductCharacteristic {
-	name: string;
-
-	value: string;
-}
 @ObjectType()
 @Entity('product')
 export class ProductEntity extends BaseEntity {
@@ -19,35 +14,23 @@ export class ProductEntity extends BaseEntity {
 
 	@Field(() => String)
 	@Column()
-	title: string;
+	name: string;
+
+	@Field(() => Number)
+	@Column()
+	price: number;
+
+	@Field(() => Number)
+	@Column()
+	count: number;
 
 	@Field(() => String)
 	@Column()
-	price: string;
-
-	@Field(() => Number)
-	@Column()
-	oldPrice: number;
-
-	@Field(() => Number)
-	@Column()
-	credit: number;
-
-	@Field(() => Number)
-	@Column()
-	calculatedRating: number;
+	vendor: string;
 
 	@Field(() => String)
 	@Column()
 	description: string;
-
-	@Field(() => String)
-	@Column()
-	advantages: string;
-
-	@Field(() => String)
-	@Column()
-	disAdvantages: string;
 
 	@Field(() => [String])
 	@Column('simple-array')
@@ -57,7 +40,4 @@ export class ProductEntity extends BaseEntity {
 	@Column('simple-array')
 	tags: string[];
 
-	@Field(() => [ProductCharacteristic])
-	@Column('simple-array')
-	characteristics: ProductCharacteristic;
 }

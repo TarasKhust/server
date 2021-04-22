@@ -1,4 +1,32 @@
-import { Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { ProductService } from './product.service';
+import { ProductEntity } from './product.entity';
+import { CreateProductInput } from './dto/create-product.input';
+import { NotFoundException } from '@nestjs/common';
 
 @Resolver()
-export class ProductResolver {}
+export class ProductResolver {
+	constructor(private readonly productService: ProductService) {}
+
+	@Mutation(() => ProductEntity)
+	async createProduct(@Args('data') createProductInput: CreateProductInput): Promise<CreateProductInput> {
+		return this.productService.create(createProductInput);
+	}
+
+	@Query(() => [ProductEntity])
+	async getAllProducts(): Promise<ProductEntity[]> {
+		return this.productService.findAll();
+	}
+
+	@Query(() => ProductEntity)
+	async getProductById(@Args('id') id: string): Promise<ProductEntity | undefined> {
+
+		try {
+			return await this.productService.findById(id);
+		} catch (error) {
+			throw new NotFoundException(`Product with id ${id} does not exist`);
+		}
+
+	}
+
+}
