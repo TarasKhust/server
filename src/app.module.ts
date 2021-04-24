@@ -15,6 +15,7 @@ import { typeormConfig } from './config/typeorm.config';
 import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { TopPageModule } from './top-page/top-page.module';
+import { BrandModule } from './brand/brand.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { TopPageModule } from './top-page/top-page.module';
 	ProductModule,
 	ReviewModule,
 	TopPageModule,
+	BrandModule,
   ],
   controllers: [AppController],
   providers: [AppService],

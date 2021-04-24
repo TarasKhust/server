@@ -21,6 +21,9 @@ export class CreateProductInput {
 	@Field(() => String)
 	vendor: string;
 
+	@Field(() => String)
+	brand: string;
+
 	@Field(() => [String])
 	categories: string[];
 

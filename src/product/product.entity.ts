@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
@@ -29,6 +29,12 @@ export class ProductEntity extends BaseEntity {
 	vendor: string;
 
 	@Field(() => String)
+	@Column({
+		nullable: true,
+	})
+	brand: string;
+
+	@Field(() => String)
 	@Column()
 	description: string;
 
@@ -39,5 +45,13 @@ export class ProductEntity extends BaseEntity {
 	@Field(() => [String])
 	@Column('simple-array')
 	tags: string[];
+
+	@Field(() => Date)
+	@CreateDateColumn({ nullable: true })
+	createdAt: Date;
+
+	@Field(() => Date)
+	@UpdateDateColumn({ nullable: true })
+	updatedAt: Date;
 
 }
