@@ -1,35 +1,46 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { BrandService } from './brand.service';
-import { Brand } from './entities/brand.entity';
+import { BrandEntity } from './entities/brand.entity';
 import { CreateBrandInput } from './dto/create-brand.input';
 import { UpdateBrandInput } from './dto/update-brand.input';
+import { NotFoundException } from '@nestjs/common';
+import { UpdateResult } from 'typeorm';
 
-@Resolver(() => Brand)
+@Resolver(() => BrandEntity)
 export class BrandResolver {
   constructor(private readonly brandService: BrandService) {}
 
-  @Mutation(() => Brand)
-  createBrand(@Args('createBrandInput') createBrandInput: CreateBrandInput) {
-    return this.brandService.create(createBrandInput);
+  @Mutation(() => BrandEntity)
+  async createBrand(@Args('data') createBrandInput: CreateBrandInput): Promise<CreateBrandInput> {
+	return this.brandService.create(createBrandInput);
   }
 
-  @Query(() => [Brand], { name: 'brand' })
-  findAll() {
-    return this.brandService.findAll();
+  @Query(() => [BrandEntity], { name: 'getAllBrands' })
+  async findAll(): Promise<BrandEntity[]> {
+	return this.brandService.findAll();
   }
 
-  @Query(() => Brand, { name: 'brand' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.brandService.findOne(id);
+  @Query(() => BrandEntity, { name: 'getBrandById' })
+  async findOne(@Args('id', { type: () => String }) id: string): Promise<BrandEntity | undefined> {
+	try {
+		return await this.brandService.findOne(id);
+	} catch (error) {
+		throw new NotFoundException(`Brand with id ${id} does not exist`);
+	}
   }
 
-  @Mutation(() => Brand)
-  updateBrand(@Args('updateBrandInput') updateBrandInput: UpdateBrandInput) {
-    return this.brandService.update(updateBrandInput.id, updateBrandInput);
+  @Mutation(() => BrandEntity)
+  async updateBrand(@Args('updateBrandInput') updateBrandInput: UpdateBrandInput): Promise<UpdateResult> {
+	return this.brandService.update(updateBrandInput.id, updateBrandInput);
   }
 
-  @Mutation(() => Brand)
-  removeBrand(@Args('id', { type: () => Int }) id: number) {
-    return this.brandService.remove(id);
+  @Mutation(() => BrandEntity)
+  async removeBrand(@Args('id', { type: () => String }) id: string): Promise<BrandEntity | undefined> {
+
+	try {
+		return await this.brandService.findOne(id);
+	} catch (error) {
+		throw new NotFoundException(`Brand with id ${id} does not exist`);
+	}
   }
 }
