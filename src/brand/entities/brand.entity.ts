@@ -4,7 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  UpdateDateColumn, JoinColumn, ManyToOne,
+  UpdateDateColumn, OneToMany,
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { ProductEntity } from '../../product/product.entity';
@@ -41,10 +41,9 @@ export class BrandEntity extends BaseEntity {
   updatedAt: Date;
 
   @Field(() => String)
-  @ManyToOne(() => ProductEntity, (product: ProductEntity) => product.brands, {
+  @OneToMany(() => ProductEntity, (product: ProductEntity) => product.brand, {
     nullable: true,
   })
-  @JoinColumn({ name: 'owner_id' })
-  owner: ProductEntity[]
+  product: ProductEntity[]
 
 }

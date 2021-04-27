@@ -2,9 +2,10 @@ import {
 	BaseEntity,
 	Column,
 	CreateDateColumn,
-	Entity, OneToMany,
+	Entity, ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
+	JoinTable,
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BrandEntity } from '../brand/entities/brand.entity';
@@ -37,10 +38,11 @@ export class ProductEntity extends BaseEntity {
 	vendor: string;
 
 	@Field(() => BrandEntity)
-	@OneToMany(() => BrandEntity, brand => brand.owner, {
+	@ManyToOne(() => BrandEntity, brand => brand.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE',
 	})
-	brands: BrandEntity[];
+	@JoinTable({ name: 'id' })
+	brand: BrandEntity;
 
 	@Field(() => String)
 	@Column()
