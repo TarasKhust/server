@@ -5,6 +5,7 @@ import * as compression from 'compression';
 import * as helmet from 'helmet';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
 	const logger = new Logger('bootstrap');
@@ -19,6 +20,8 @@ async function bootstrap() {
 	app.setGlobalPrefix('api');
 
 	app.use(cookieParser());
+
+	app.use(bodyParser.json());
 
 	app.useGlobalPipes(new ValidationPipe());
 
