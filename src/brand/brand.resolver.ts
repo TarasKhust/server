@@ -4,7 +4,7 @@ import { BrandEntity } from './entities/brand.entity';
 import { CreateBrandInput } from './dto/create-brand.input';
 import { UpdateBrandInput } from './dto/update-brand.input';
 import { NotFoundException } from '@nestjs/common';
-import { UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Resolver(() => BrandEntity)
 export class BrandResolver {
@@ -35,10 +35,10 @@ export class BrandResolver {
   }
 
   @Mutation(() => BrandEntity)
-  async removeBrand(@Args('id', { type: () => String }) id: string): Promise<BrandEntity | undefined> {
+  async removeBrand(@Args('id', { type: () => String }) id: string): Promise<DeleteResult> {
 
 	try {
-		return await this.brandService.findOne(id);
+		return await this.brandService.remove(id);
 	} catch (error) {
 		throw new NotFoundException(`Brand with id ${id} does not exist`);
 	}

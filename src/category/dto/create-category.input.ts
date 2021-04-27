@@ -11,12 +11,10 @@ export class CreateCategoryInput {
   @Field(() => String)
   description: string;
 
-  @Field(type => String)
+  @Field(() => [String])
   metaDataTag: string[];
 
-  @Field(type => String)
+  @Field(() => [String])
   metaDataTagKeyword: string[];
 
-  @Field(type => String)
-  tag: string[];
 }

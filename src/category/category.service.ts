@@ -1,33 +1,52 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCategoryInput } from './dto/create-category.input';
-import { UpdateCategoryInput } from './dto/update-category.input';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Category } from './entities/category.entity';
+import { UpdateBrandInput } from '../brand/dto/update-brand.input';
 
 @Injectable()
 export class CategoryService {
   constructor(@InjectRepository(Category) private categoryRepository: Repository<Category>) {}
 
   public async createCategory(createCategoryInput: CreateCategoryInput): Promise<Category> {
-	const newCategory = this.categoryRepository.create(createCategoryInput);
+	  const { name } = createCategoryInput;
 
-	return this.categoryRepository.save(newCategory);
+	  const getProductVendor = await this.categoryRepository.findOne({
+		  where: {
+			  name,
+		  },
+	  });
+
+	  if (getProductVendor) {
+		  throw new BadRequestException(`This ${name} already exist`);
+	  }
+
+	  const newProduct = await this.categoryRepository.create(createCategoryInput);
+
+	  return this.categoryRepository.save(newProduct);
   }
 
   public async findAll(): Promise<Category[]> {
 	return this.categoryRepository.find();
   }
 
-  public findOne(id: string) {
-	return `This action returns a #${id} category`;
-  }
+	async findOne(id: string): Promise<Category | undefined> {
+		return this.categoryRepository.findOne({
+			where: {
+				id,
+			},
+		});
+	}
 
-  public update(id: string, updateCategoryInput: UpdateCategoryInput) {
-	return `This action updates a #${id} category`;
-  }
+	async update(id: string, updateBrandInput: UpdateBrandInput): Promise<UpdateResult> {
+		return this.categoryRepository.update(id, {
+			...updateBrandInput,
 
-  public remove(id: string) {
-	return `This action removes a #${id} category`;
-  }
+		});
+	}
+
+	async remove(id: string): Promise<DeleteResult> {
+		return this.categoryRepository.delete(id);
+	}
 }

@@ -4,27 +4,24 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 @Entity()
 export class Category {
-  @Field(type => String)
+  @Field(() => String)
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Field(type => String)
+  @Field(() => String)
   @Column()
   name: string;
 
-  @Field(type => String)
+  @Field(() => String)
   @Column()
   description: string;
 
-  @Field(type => String)
+  @Field(() => String)
   @Column('simple-array')
   metaDataTag: string[];
 
-  @Field(type => String)
+  @Field(() => String)
   @Column('simple-array')
   metaDataTagKeyword: string[];
 
-  @Field(type => String)
-  @Column('simple-array')
-  tag: string[];
 }
