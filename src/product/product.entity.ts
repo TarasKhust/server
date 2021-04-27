@@ -1,5 +1,13 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+	BaseEntity,
+	Column,
+	CreateDateColumn,
+	Entity, OneToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { BrandEntity } from '../brand/entities/brand.entity';
 
 @ObjectType()
 @Entity('product')
@@ -28,11 +36,11 @@ export class ProductEntity extends BaseEntity {
 	@Column()
 	vendor: string;
 
-	@Field(() => String)
-	@Column({
-		nullable: true,
+	@Field(() => BrandEntity)
+	@OneToMany(() => BrandEntity, brand => brand.owner, {
+		onDelete: 'CASCADE', onUpdate: 'CASCADE',
 	})
-	brand: string;
+	brands: BrandEntity[];
 
 	@Field(() => String)
 	@Column()

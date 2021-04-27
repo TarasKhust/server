@@ -5,7 +5,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @Entity()
 export class Category {
   @Field(() => String)
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Field(() => String)
@@ -17,8 +17,8 @@ export class Category {
   description: string;
 
   @Field(() => String)
-  @Column('simple-array')
-  metaDataTag: string[];
+  @Column()
+  metaTagDescription: string;
 
   @Field(() => String)
   @Column('simple-array')
