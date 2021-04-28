@@ -1,7 +1,4 @@
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
-
-const logger = new Logger('bootstrap');
 
 const whitelist = ['https://clientfront.herokuapp.com/', 'https://clientcrm.herokuapp.com/', 'http://localhost:9000'];
 
