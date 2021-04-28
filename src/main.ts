@@ -11,7 +11,6 @@ async function bootstrap() {
 	const logger = new Logger('bootstrap');
 	const app = await NestFactory.create(AppModule, { logger: true });
 	const config = app.get(ConfigService);
-	const development = config.get('environment') === 'development';
 	const production = config.get('environment') === 'production';
 	const PORT = config.get('port');
 
