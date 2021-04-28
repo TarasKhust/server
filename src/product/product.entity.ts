@@ -1,5 +1,15 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+	BaseEntity,
+	Column,
+	CreateDateColumn,
+	Entity, ManyToOne,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+	JoinTable,
+} from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { BrandEntity } from '../brand/entities/brand.entity';
+import { Category } from '../category/entities/category.entity';
 
 @ObjectType()
 @Entity('product')
@@ -28,19 +38,23 @@ export class ProductEntity extends BaseEntity {
 	@Column()
 	vendor: string;
 
-	@Field(() => String)
-	@Column({
-		nullable: true,
+	@Field(() => BrandEntity)
+	@ManyToOne(() => BrandEntity, brand => brand.product, {
+		onDelete: 'CASCADE', onUpdate: 'CASCADE',
 	})
-	brand: string;
+	@JoinTable({ name: 'id' })
+	brand: BrandEntity;
 
 	@Field(() => String)
 	@Column()
 	description: string;
 
-	@Field(() => [String])
-	@Column('simple-array')
-	categories: string[];
+	@Field(() => Category)
+	@ManyToOne(() => Category, category => category.product, {
+		onDelete: 'CASCADE', onUpdate: 'CASCADE',
+	})
+	@JoinTable({ name: 'id' })
+	category: Category;
 
 	@Field(() => [String])
 	@Column('simple-array')

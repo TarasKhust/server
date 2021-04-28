@@ -43,6 +43,7 @@
     "@types/hapi__joi": "17.1.6",
     "apollo-server-express": "2.21.0",
     "apollo-server-fastify": "3.0.0-alpha.3",
+    "autocannon": "7.2.0",
     "bcrypt": "5.0.1",
     "cache-manager": "3.4.0",
     "class-transformer": "0.4.0",

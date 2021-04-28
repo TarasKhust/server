@@ -1,5 +1,13 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn, OneToMany,
+} from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { ProductEntity } from '../../product/product.entity';
 
 @ObjectType()
 @Entity('brand')
@@ -31,5 +39,11 @@ export class BrandEntity extends BaseEntity {
   @Field(() => Date)
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
+
+  @Field(() => String)
+  @OneToMany(() => ProductEntity, (product: ProductEntity) => product.brand, {
+    nullable: true,
+  })
+  product: ProductEntity[]
 
 }

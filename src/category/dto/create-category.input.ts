@@ -1,22 +1,23 @@
 import { InputType, Field } from '@nestjs/graphql';
+import { IsArray, IsString } from 'class-validator';
 
 @InputType()
 export class CreateCategoryInput {
-  @Field(() => String)
-  id: string;
 
+  @IsString()
   @Field(() => String)
   name: string;
 
+  @IsString()
   @Field(() => String)
   description: string;
 
-  @Field(type => String)
-  metaDataTag: string[];
+  @IsString()
+  @Field(() => String)
+  metaTagDescription: string;
 
-  @Field(type => String)
+  @IsArray()
+  @Field(() => [String], { nullable: true })
   metaDataTagKeyword: string[];
 
-  @Field(type => String)
-  tag: string[];
 }

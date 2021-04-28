@@ -1,30 +1,34 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { ProductEntity } from '../../product/product.entity';
 
 @ObjectType()
 @Entity()
 export class Category {
-  @Field(type => String)
-  @PrimaryGeneratedColumn()
+  @Field(() => String)
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field(type => String)
+  @Field(() => String)
   @Column()
   name: string;
 
-  @Field(type => String)
+  @Field(() => String)
   @Column()
   description: string;
 
-  @Field(type => String)
-  @Column('simple-array')
-  metaDataTag: string[];
+  @Field(() => String)
+  @Column()
+  metaTagDescription: string;
 
-  @Field(type => String)
+  @Field(() => String)
   @Column('simple-array')
   metaDataTagKeyword: string[];
 
-  @Field(type => String)
-  @Column('simple-array')
-  tag: string[];
+  @Field(() => String)
+  @OneToMany(() => ProductEntity, (product: ProductEntity) => product.category, {
+	nullable: true,
+  })
+  product: ProductEntity[];
+
 }
