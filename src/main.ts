@@ -6,10 +6,15 @@ import * as helmet from 'helmet';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as bodyParser from 'body-parser';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
 	const logger = new Logger('bootstrap');
-	const app = await NestFactory.create(AppModule, { logger: true });
+
+	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+		logger: true,
+	});
+
 	const config = app.get(ConfigService);
 	const development = config.get('environment') === 'development';
 	const production = config.get('environment') === 'production';
