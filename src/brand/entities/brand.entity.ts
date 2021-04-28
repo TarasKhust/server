@@ -42,8 +42,8 @@ export class BrandEntity extends BaseEntity {
 
   @Field(() => String)
   @OneToMany(() => ProductEntity, (product: ProductEntity) => product.brand, {
-    nullable: true,
+	nullable: true,
   })
-  product: ProductEntity[]
+  product: ProductEntity[];
 
 }

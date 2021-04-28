@@ -14,6 +14,7 @@ async function bootstrap() {
 	const development = config.get('environment') === 'development';
 	const production = config.get('environment') === 'production';
 	const PORT = config.get('port');
+	const whitelist = ['https://clientfront.herokuapp.com/', 'https://clientcrm.herokuapp.com/'];
 
 	logger.verbose(config.get('environment'));
 
@@ -31,8 +32,20 @@ async function bootstrap() {
 		app.enableCors();
 		logger.verbose('cors is enabled');
 	} else {
-		app.enableCors({ origin: 'https://clientfront.herokuapp.com/' });
-		logger.log('Accepting requests from origin https://clientfront.herokuapp.com/');
+		app.enableCors({
+			origin: function (origin, callback) {
+				if (whitelist.indexOf(origin) !== -1) {
+					console.log('allowed cors for:', origin);
+					callback(null, true);
+				} else {
+					console.log('blocked cors for:', origin);
+					callback(new Error('Not allowed by CORS'));
+				}
+			},
+			allowedHeaders: 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe',
+			methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+			credentials: true,
+		});
 	}
 
 	app.use(compression());

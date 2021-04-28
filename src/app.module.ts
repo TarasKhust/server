@@ -13,8 +13,6 @@ import { CategoryModule } from './category/category.module';
 import { validationSchema } from './config/validation';
 import { typeormConfig } from './config/typeorm.config';
 import { ProductModule } from './product/product.module';
-import { ReviewModule } from './review/review.module';
-import { TopPageModule } from './top-page/top-page.module';
 import { BrandModule } from './brand/brand.module';
 
 @Module({
@@ -44,8 +42,6 @@ import { BrandModule } from './brand/brand.module';
 	AuthModule,
 	CategoryModule,
 	ProductModule,
-	ReviewModule,
-	TopPageModule,
 	BrandModule,
   ],
   controllers: [AppController],
