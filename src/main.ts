@@ -6,20 +6,14 @@ import * as helmet from 'helmet';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as bodyParser from 'body-parser';
-import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
 	const logger = new Logger('bootstrap');
-
-	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-		logger: true,
-	});
-
+	const app = await NestFactory.create(AppModule, { logger: true });
 	const config = app.get(ConfigService);
 	const development = config.get('environment') === 'development';
 	const production = config.get('environment') === 'production';
 	const PORT = config.get('port');
-	const whitelist = ['https://clientfront.herokuapp.com/', 'https://clientcrm.herokuapp.com/'];
 
 	logger.verbose(config.get('environment'));
 
@@ -37,20 +31,8 @@ async function bootstrap() {
 		app.enableCors();
 		logger.verbose('cors is enabled');
 	} else {
-		app.enableCors({
-			origin: function (origin, callback) {
-				if (whitelist.indexOf(origin) !== -1) {
-					console.log('allowed cors for:', origin);
-					callback(null, true);
-				} else {
-					console.log('blocked cors for:', origin);
-					callback(new Error('Not allowed by CORS'));
-				}
-			},
-			allowedHeaders: 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe',
-			methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-			credentials: true,
-		});
+		app.enableCors({ origin: 'https://clientfront.herokuapp.com/' });
+		logger.log('Accepting requests from origin https://clientfront.herokuapp.com/');
 	}
 
 	app.use(compression());
