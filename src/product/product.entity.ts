@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BrandEntity } from '../brand/entities/brand.entity';
+import { Category } from '../category/entities/category.entity';
 
 @ObjectType()
 @Entity('product')
@@ -48,9 +49,12 @@ export class ProductEntity extends BaseEntity {
 	@Column()
 	description: string;
 
-	@Field(() => [String])
-	@Column('simple-array')
-	categories: string[];
+	@Field(() => Category)
+	@ManyToOne(() => Category, category => category.product, {
+		onDelete: 'CASCADE', onUpdate: 'CASCADE',
+	})
+	@JoinTable({ name: 'id' })
+	category: Category;
 
 	@Field(() => [String])
 	@Column('simple-array')

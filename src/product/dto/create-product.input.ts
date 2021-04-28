@@ -1,5 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { BrandEntity } from '../../brand/entities/brand.entity';
+import { Category } from '../../category/entities/category.entity';
 
 @InputType('Product')
 export class CreateProductInput {
@@ -25,8 +26,8 @@ export class CreateProductInput {
 	@Field(() => String)
 	brand: BrandEntity;
 
-	@Field(() => [String])
-	categories: string[];
+	@Field(() => String)
+	category: Category;
 
 	@Field(() => [String])
 	tags: string[];
