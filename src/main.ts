@@ -27,15 +27,9 @@ async function bootstrap() {
 
 	app.use(helmet({ contentSecurityPolicy: production ? undefined : false }));
 
-	if (development) {
-		app.enableCors();
-		logger.verbose('cors is enabled');
-	} else {
-		app.enableCors({ origin: 'https://clientfront.herokuapp.com/' });
-		logger.log('Accepting requests from origin https://clientfront.herokuapp.com/');
-	}
-
 	app.use(compression());
+
+	app.enableCors();
 
 	await app.listen(PORT || 3000);
 
