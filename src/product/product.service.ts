@@ -37,7 +37,7 @@ export class ProductService {
 	}
 
 	async findById(id: string): Promise<ProductEntity | undefined> {
-		return this.productRepository.findOne({
+		return this.productRepository.findOneOrFail({
 			where: {
 				id,
 			},

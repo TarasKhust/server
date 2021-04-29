@@ -11,7 +11,7 @@ export class BrandResolver {
   constructor(private readonly brandService: BrandService) {}
 
   @Mutation(() => BrandEntity)
-  async createBrand(@Args('data') createBrandInput: CreateBrandInput): Promise<CreateBrandInput> {
+  async createBrand(@Args('createBrandInput') createBrandInput: CreateBrandInput): Promise<CreateBrandInput> {
 	return this.brandService.create(createBrandInput);
   }
 

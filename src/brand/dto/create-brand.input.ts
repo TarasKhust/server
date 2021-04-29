@@ -9,10 +9,10 @@ export class CreateBrandInput {
   @Field(() => String)
   description: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   metaTagsDescription: string;
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
   metaTags: string[];
 
 }

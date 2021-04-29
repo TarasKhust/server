@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { ProductEntity } from '../../product/product.entity';
+import { IsString, MinLength } from 'class-validator';
 
 @ObjectType()
 @Entity('brand')
@@ -16,20 +17,26 @@ export class BrandEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @MinLength(3)
+  @IsString()
   @Field(() => String)
   @Column()
   name: string;
 
+  @MinLength(3)
+  @IsString()
   @Field(() => String)
   @Column()
   description: string;
 
-  @Field(() => String)
-  @Column()
+  @MinLength(3)
+  @IsString()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   metaTagsDescription: string;
 
-  @Field(() => [String])
-  @Column('simple-array')
+  @Field(() => [String], { nullable: true })
+  @Column('simple-array', { nullable: true })
   metaTags: string[];
 
   @Field(() => Date)
