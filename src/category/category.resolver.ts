@@ -21,7 +21,7 @@ export class CategoryResolver {
   }
 
   @Query(() => Category, { name: 'categoryFindOne' })
-  async findOne(@Args('id', { type: () => String }) id: string): Promise<Category | undefined> {
+  async findOne(@Args('id', { type: () => Number }) id: number): Promise<Category | undefined> {
 
 	  try {
 		  return await this.categoryService.findOne(id);
@@ -36,7 +36,7 @@ export class CategoryResolver {
   }
 
   @Mutation(() => Category)
-  async removeCategory(@Args('id', { type: () => String }) id: string): Promise<DeleteResult> {
+  async removeCategory(@Args('id', { type: () => Number }) id: number): Promise<DeleteResult> {
 	return this.categoryService.remove(id);
   }
 }

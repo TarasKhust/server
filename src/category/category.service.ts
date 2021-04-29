@@ -3,7 +3,7 @@ import { CreateCategoryInput } from './dto/create-category.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Category } from './entities/category.entity';
-import { UpdateBrandInput } from '../brand/dto/update-brand.input';
+import { UpdateCategoryInput } from './dto/update-category.input';
 
 @Injectable()
 export class CategoryService {
@@ -28,10 +28,11 @@ export class CategoryService {
   }
 
   public async findAll(): Promise<Category[]> {
-	return this.categoryRepository.find();
+
+	return this.categoryRepository.find({ relations: ['parentCategory', 'childCategories', 'product'] });
   }
 
-	async findOne(id: string): Promise<Category | undefined> {
+	async findOne(id: number): Promise<Category | undefined> {
 		return this.categoryRepository.findOne({
 			where: {
 				id,
@@ -39,14 +40,14 @@ export class CategoryService {
 		});
 	}
 
-	async update(id: string, updateBrandInput: UpdateBrandInput): Promise<UpdateResult> {
+	async update(id: number, updateCategoryInput: UpdateCategoryInput): Promise<UpdateResult> {
 		return this.categoryRepository.update(id, {
-			...updateBrandInput,
+			...updateCategoryInput,
 
 		});
 	}
 
-	async remove(id: string): Promise<DeleteResult> {
+	async remove(id: number): Promise<DeleteResult> {
 		return this.categoryRepository.delete(id);
 	}
 }
