@@ -11,7 +11,7 @@ export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Mutation(() => Category)
-  createCategory(@Args('data') createCategoryInput: CreateCategoryInput): Promise<CreateCategoryInput> {
+  createCategory(@Args('createCategoryInput') createCategoryInput: CreateCategoryInput): Promise<CreateCategoryInput> {
 	return this.categoryService.createCategory(createCategoryInput);
   }
 

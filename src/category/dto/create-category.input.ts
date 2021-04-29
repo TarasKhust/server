@@ -13,7 +13,7 @@ export class CreateCategoryInput {
   description: string;
 
   @IsString()
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   metaTagDescription: string;
 
   @IsArray()

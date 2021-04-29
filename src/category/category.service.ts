@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
@@ -19,7 +19,7 @@ export class CategoryService {
 	  });
 
 	  if (getProductVendor) {
-		  throw new BadRequestException(`This ${name} already exist`);
+		  throw new NotFoundException(`This ${name} already exist`);
 	  }
 
 	  const newProduct = await this.categoryRepository.create(createCategoryInput);

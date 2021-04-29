@@ -17,15 +17,23 @@ export class Category {
   @Column()
   description: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  seoUrl: string;
+
+  @Field(() => Boolean, { defaultValue: true, nullable: true })
+  @Column({ select: true, nullable: true })
+  status: boolean;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   metaTagDescription: string;
 
-  @Field(() => String)
-  @Column('simple-array')
+  @Field(() => String, { nullable: true })
+  @Column('simple-array', { nullable: true })
   metaDataTagKeyword: string[];
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @OneToMany(() => ProductEntity, (product: ProductEntity) => product.category, {
 	nullable: true,
   })
