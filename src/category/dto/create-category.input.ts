@@ -21,7 +21,7 @@ export class CreateCategoryInput {
 
   @IsString()
   @Field(() => String, { nullable: true })
-  metaTagDescription: string;
+  metaDescription: string;
 
   @IsArray()
   @Field(() => [String], { nullable: true })

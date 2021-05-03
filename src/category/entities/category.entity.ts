@@ -27,7 +27,7 @@ export class Category {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  metaTagDescription: string;
+  metaDescription: string;
 
   @Field(() => String, { nullable: true })
   @Column('simple-array', { nullable: true })
