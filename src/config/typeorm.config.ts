@@ -3,7 +3,9 @@ import { ConfigService } from '@nestjs/config';
 
 export const typeormConfig = async (configService: ConfigService) => {
 	const development = configService.get('environment') === 'development';
+	const provision = configService.get('environment') === 'provision';
 	const { host, username, password, database, port } = configService.get('databaseConfig');
+
 	const { host: hostDev, username: usernameDev, password: passwordDev, database: databaseDev, port: portDev }
 	= configService.get('databaseConfigDev');
 
@@ -14,7 +16,7 @@ export const typeormConfig = async (configService: ConfigService) => {
 		username,
 		password,
 		database,
-		synchronize: false,
+		synchronize: provision,
 		autoLoadEntities: true,
 		migrationsTableName: 'migration',
 

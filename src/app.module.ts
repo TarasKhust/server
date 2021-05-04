@@ -18,7 +18,7 @@ import { BrandModule } from './brand/brand.module';
 @Module({
   imports: [
 	ConfigModule.forRoot({
-		envFilePath: ['.env.development', '.env.production'],
+		envFilePath: ['.env.development', '.env.production', '.env.provision'],
 		isGlobal: true,
 		cache: true,
 		load: [configuration, database, databaseConfigDev],
