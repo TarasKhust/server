@@ -24,7 +24,7 @@ export class CategoryResolver {
 			const array: { id: number; title: string; disabled: boolean; value: number; label: string; children: any; }[] = [];
 
 			data?.forEach((value) => {
-				if (value.childCategories.length <= 0) {
+				if (value.parentCategory) {
 					return;
 				}
 
