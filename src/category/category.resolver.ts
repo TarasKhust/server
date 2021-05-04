@@ -17,8 +17,39 @@ export class CategoryResolver {
   }
 
   @Query(() => [FindCategories], { name: 'categoryFindAll' })
-  async findAll(): Promise<FindCategories[]> {
-	return this.categoryService.findAll();
+  async findAll(): Promise<{ id: number; title: string; disabled: boolean; value: number; label: string; children: any }[]> {
+		const category = await this.categoryService.findAll();
+
+		const adapter = (data: Category[] = []): { id: number; title: string; disabled: boolean; value: number; label: string; children: any }[] => {
+			const array: { id: number; title: string; disabled: boolean; value: number; label: string; children: any; }[] = [];
+
+			data?.forEach((value) => {
+				if (value.childCategories.length <= 0) {
+					return;
+				}
+
+				array.push({
+					id: value.id,
+					title: value.name,
+					disabled: !value.status,
+					value: value.id,
+					label: value.name,
+					children: value.childCategories.map((v: { id: { toString: () => string; }; name: string; status: boolean; }) => {
+						return {
+							id: `${value.id.toString()}-${v.id.toString()}`,
+							title: v.name,
+							disabled: !v.status,
+							value: `${value.id.toString()}-${v.id.toString()}`,
+						};
+					}),
+
+				});
+			});
+
+			return array;
+		};
+
+		return adapter(category);
   }
 
   @Query(() => Category, { name: 'categoryFindOne' })

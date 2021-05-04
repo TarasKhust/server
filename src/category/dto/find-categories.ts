@@ -1,18 +1,23 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Category } from '../entities/category.entity';
 
 @ObjectType()
 export class FindCategories {
-	@Field(() => Number)
-	id: number;
+	@Field(() => String)
+	id: string;
 
 	@Field(() => String)
-	name: string;
+	title: string;
+
+	@Field(() => String)
+	value: string;
+
+	@Field(() => String)
+	label: string;
 
 	@Field(() => Boolean, { nullable: true })
-	status: boolean;
+	disabled: boolean;
 
-	@Field(() => [Category], { nullable: true })
-	childCategories: Category[];
+	@Field(() => [FindCategories], { nullable: true })
+	children: FindCategories[];
 
 }
