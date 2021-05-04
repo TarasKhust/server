@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { UpdateCategoryInput } from './dto/update-category.input';
+import { FindCategories } from './dto/find-categories';
 
 @Injectable()
 export class CategoryService {
@@ -27,7 +28,7 @@ export class CategoryService {
 	  return this.categoryRepository.save(newProduct);
   }
 
-  public async findAll(): Promise<Category[]> {
+  public async findAll(): Promise<FindCategories[]> {
 
 	return this.categoryRepository.find({ relations: ['parentCategory', 'childCategories', 'product'] });
   }

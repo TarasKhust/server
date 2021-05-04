@@ -5,6 +5,7 @@ import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { NotFoundException } from '@nestjs/common';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { FindCategories } from './dto/find-categories';
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -15,8 +16,8 @@ export class CategoryResolver {
 	return this.categoryService.createCategory(createCategoryInput);
   }
 
-  @Query(() => [Category], { name: 'categoryFindAll' })
-  async findAll(): Promise<Category[]> {
+  @Query(() => [FindCategories], { name: 'categoryFindAll' })
+  async findAll(): Promise<FindCategories[]> {
 	return this.categoryService.findAll();
   }
 
