@@ -51,3 +51,4 @@ Thumbs.db
 tmp/
 .env.development
 .env.production
+.env.provision

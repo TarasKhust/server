@@ -21,7 +21,7 @@ export class CategoryResolver {
 		const category = await this.categoryService.findAll();
 
 		const adapter = (data: Category[] = []): { id: number; title: string; disabled: boolean; value: number; label: string; children: any }[] => {
-			const array: { id: number; title: string; disabled: boolean; value: number; label: string; children: any; }[] = [];
+			const array: { id: number; key: number, title: string; disabled: boolean; value: number; label: string; children: any; }[] = [];
 
 			data?.forEach((value) => {
 				if (value.parentCategory) {
@@ -30,16 +30,18 @@ export class CategoryResolver {
 
 				array.push({
 					id: value.id,
+					key: value.id,
 					title: value.name,
 					disabled: !value.status,
 					value: value.id,
 					label: value.name,
 					children: value.childCategories.map((v: { id: { toString: () => string; }; name: string; status: boolean; }) => {
 						return {
-							id: `${value.id.toString()}-${v.id.toString()}`,
+							id: v.id,
+							key: `${value.id.toString()}-${v.id.toString()}`,
 							title: v.name,
 							disabled: !v.status,
-							value: `${value.id.toString()}-${v.id.toString()}`,
+							value: v.id,
 						};
 					}),
 

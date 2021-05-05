@@ -26,9 +26,27 @@ export class CreateProductInput {
 	@Field(() => String)
 	brand: BrandEntity;
 
-	@Field(() => String)
+	@Field(() => Number)
 	category: Category;
 
 	@Field(() => [String])
 	tags: string[];
+
+	@Field(() => Number)
+	minimalCount: number;
+
+	@Field(() => String)
+	statusExist: string;
+
+	@Field(() => Boolean, { nullable: true })
+	status: boolean;
+
+	@Field(() => String, { nullable: true })
+	metaDescription: string;
+
+	@Field(() => [String], { nullable: true })
+	metaDataTagKeyword: string[];
+
+	@Field(() => String, { nullable: true })
+	seoUrl: string;
 }

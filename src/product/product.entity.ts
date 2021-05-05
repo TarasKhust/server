@@ -34,9 +34,21 @@ export class ProductEntity extends BaseEntity {
 	@Column()
 	count: number;
 
+	@Field(() => Number)
+	@Column()
+	minimalCount: number;
+
 	@Field(() => String)
 	@Column()
 	vendor: string;
+
+	@Field(() => String)
+	@Column()
+	statusExist: string;
+
+	@Field(() => Boolean, { nullable: true })
+	@Column({ nullable: true })
+	status: boolean;
 
 	@Field(() => BrandEntity)
 	@ManyToOne(() => BrandEntity, brand => brand.product, {
@@ -59,6 +71,18 @@ export class ProductEntity extends BaseEntity {
 	@Field(() => [String])
 	@Column('simple-array')
 	tags: string[];
+
+	@Field(() => String, { nullable: true })
+	@Column({ nullable: true })
+	metaDescription: string;
+
+	@Field(() => [String], { nullable: true })
+	@Column('simple-array', { nullable: true })
+	metaDataTagKeyword: string[];
+
+	@Field(() => String, { nullable: true })
+	@Column({ nullable: true })
+	seoUrl: string;
 
 	@Field(() => Date)
 	@CreateDateColumn({ nullable: true })

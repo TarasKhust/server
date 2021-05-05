@@ -6,6 +6,9 @@ export class FindCategories {
 	id: string;
 
 	@Field(() => String)
+	key: string;
+
+	@Field(() => String)
 	title: string;
 
 	@Field(() => String)
