@@ -18,6 +18,8 @@ async function bootstrap() {
 
 	app.use(bodyParser.json());
 
+	app.setGlobalPrefix('api');
+
 	app.useGlobalPipes(new ValidationPipe());
 
 	app.use(compression());

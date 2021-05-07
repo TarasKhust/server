@@ -10,6 +10,10 @@ export const graphqlConfig = (configService: ConfigService) => {
 		debug: dev,
 		playground: dev,
 		installSubscriptionHandlers: true,
+		uploads: {
+			maxFileSize: 20000000, // 20 MB
+			maxFiles: 5,
+		},
 		introspection: dev,
 		autoSchemaFile: true,
 		context: ({ req }: any) => ({ headers: req.headers }),

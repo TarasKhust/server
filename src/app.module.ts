@@ -14,6 +14,8 @@ import { validationSchema } from './config/validation';
 import { typeormConfig } from './config/typeorm.config';
 import { ProductModule } from './product/product.module';
 import { BrandModule } from './brand/brand.module';
+import { PhotosModule } from './photos/photos.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -43,6 +45,8 @@ import { BrandModule } from './brand/brand.module';
 	CategoryModule,
 	ProductModule,
 	BrandModule,
+	PhotosModule,
+  	FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
