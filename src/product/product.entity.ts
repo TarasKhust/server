@@ -18,9 +18,9 @@ export class ProductEntity extends BaseEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Field(() => String)
-	@Column()
-	image: string;
+	@Field(() => [String], { nullable: true })
+	@Column('text', { array: true, nullable: true })
+	image: string[];
 
 	@Field(() => String)
 	@Column()
