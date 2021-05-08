@@ -14,7 +14,6 @@ import { validationSchema } from './config/validation';
 import { typeormConfig } from './config/typeorm.config';
 import { ProductModule } from './product/product.module';
 import { BrandModule } from './brand/brand.module';
-import { PhotosModule } from './photos/photos.module';
 import { FilesModule } from './files/files.module';
 import { AttributeModule } from './attribute/attribute.module';
 
@@ -46,7 +45,6 @@ import { AttributeModule } from './attribute/attribute.module';
 	CategoryModule,
 	ProductModule,
 	BrandModule,
-	PhotosModule,
   	FilesModule,
   	AttributeModule,
   ],
