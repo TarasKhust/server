@@ -14,7 +14,7 @@ export const graphqlConfig = (configService: ConfigService) => {
 			maxFileSize: 20000000, // 20 MB
 			maxFiles: 5,
 		},
-		introspection: dev,
+		introspection: true,
 		autoSchemaFile: true,
 		context: ({ req }: any) => ({ headers: req.headers }),
 		cors: true,
