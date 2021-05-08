@@ -1,15 +1,14 @@
+
 import { Module } from '@nestjs/common';
 import { FilesController } from './files.controller';
 import { FilesService } from './files.service';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { path } from 'app-root-path';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { FileEntity } from './files.entity';
+import { GenericService } from 'src/generic/generic.service';
 
 @Module({
-	imports: [ServeStaticModule.forRoot({
-		rootPath: `${path}/uploads`,
-		serveRoot: '/uploads',
-	})],
+	imports: [TypeOrmModule.forFeature([FileEntity])],
 	controllers: [FilesController],
-	providers: [FilesService],
+	providers: [FilesService, GenericService],
 })
-export class FilesModule { }
+export class FilesModule {}

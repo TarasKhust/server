@@ -42,6 +42,8 @@
     "@nestjs/schedule": "0.4.2",
     "@nestjs/serve-static": "2.1.4",
     "@nestjs/typeorm": "7.1.5",
+    "@nestjsx/crud-typeorm": "5.0.0-alpha.3",
+    "@nestjsx/crud": "4.6.2",
     "@types/hapi__joi": "17.1.6",
     "apollo-server-express": "2.21.0",
     "apollo-server-fastify": "3.0.0-alpha.3",

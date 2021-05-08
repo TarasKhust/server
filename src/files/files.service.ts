@@ -1,33 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import path = require('path');
-import { path as pathRoot } from 'app-root-path';
-import { ensureDir, writeFile } from 'fs-extra';
-import * as sharp from 'sharp';
-import { MFile } from './mfile.class';
-import { v4 as uuidv4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FileEntity } from './files.entity';
+import { Repository } from 'typeorm';
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
 @Injectable()
-export class FilesService {
-
-	async saveFiles(files: MFile[]): Promise<string[]> {
-		const dateFolder = 'images';
-		const uploadFolder = `${pathRoot}/uploads/${dateFolder}`;
-		await ensureDir(uploadFolder);
-		const res: string[] = [];
-
-		for (const file of files) {
-			const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
-			const extension: string = path.parse(file.originalname).ext;
-			await writeFile(`${uploadFolder}/${filename}${extension}`, file.buffer);
-			res.push(`/uploads/${dateFolder}/${filename}${extension}`);
-		}
-
-		return res;
+export class FilesService extends TypeOrmCrudService<FileEntity> {
+	constructor(
+		@InjectRepository(FileEntity)
+		private readonly fileRepo: Repository<FileEntity>,
+	) {
+		super(fileRepo);
 	}
 
-	convertToWebP(file: Buffer): Promise<Buffer> {
-		return sharp(file)
-			.webp()
-			.toBuffer();
+	async dbSave(
+		file: Express.Multer.File,
+		newFileName: string,
+	): Promise<string | undefined> {
+		const image = this.mapUploadFile(file, newFileName);
+		await this.fileRepo.save(image);
+
+		return image.current_name;
+	}
+
+	private mapUploadFile(
+		{ originalname, mimetype, size }: Express.Multer.File,
+		newFileName: string,
+	): Partial<FileEntity> {
+		// const { originalname, mimetype, size } = file;
+		return {
+			original_name: originalname,
+			size,
+			current_name: newFileName,
+			extention: mimetype.split('/')[1], // mimetype: 'image/jpeg'
+		};
 	}
 }
