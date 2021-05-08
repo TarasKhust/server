@@ -16,6 +16,7 @@ import { ProductModule } from './product/product.module';
 import { BrandModule } from './brand/brand.module';
 import { PhotosModule } from './photos/photos.module';
 import { FilesModule } from './files/files.module';
+import { AttributeModule } from './attribute/attribute.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { FilesModule } from './files/files.module';
 	BrandModule,
 	PhotosModule,
   	FilesModule,
+  	AttributeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
