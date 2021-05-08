@@ -2,18 +2,21 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ProductService } from './product.service';
 import { ProductEntity } from './product.entity';
 import { CreateProductInput } from './dto/create-product.input';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Resolver()
 export class ProductResolver {
 	constructor(private readonly productService: ProductService) {}
 
+	@UseGuards(JwtAuthGuard)
 	@Mutation(() => ProductEntity)
 	async createProduct(@Args('data') createProductInput: CreateProductInput): Promise<CreateProductInput> {
 		return this.productService.create(createProductInput);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Mutation(() => ProductEntity)
 	async deleteProduct(@Args('id') id: string): Promise<DeleteResult> {
 		try {

@@ -1,10 +1,11 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { IsEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { IsEmpty, IsOptional, IsString } from 'class-validator';
 import { ProductEntity } from '../../product/product.entity';
 
 @ObjectType()
-export class Attribute {
+@Entity('attribute')
+export class Attribute extends BaseEntity {
   @Field(() => Number)
   @PrimaryGeneratedColumn()
   @IsOptional({ always: true })
@@ -16,16 +17,12 @@ export class Attribute {
   @IsEmpty({ always: true, message: 'hey...' })
   name: string;
 
-  @Column({ type: 'int' })
-  @IsNumber()
-  @IsEmpty({ always: true, message: 'hey...' })
-  size: number;
-
-  @ManyToOne(
-      () => ProductEntity,
-      (product: ProductEntity) => product.image,
-      { onUpdate: 'CASCADE', onDelete: 'CASCADE', nullable: true },
+  @Field(() => String, { nullable: true })
+  @OneToMany(
+		() => ProductEntity,
+		(product: ProductEntity) => product.image,
+		{ onUpdate: 'CASCADE', onDelete: 'CASCADE', nullable: true },
   )
-  @JoinColumn({ name: 'product_id' })
-  product: ProductEntity;
+  @JoinColumn({ name: 'id' })
+  product: ProductEntity[];
 }

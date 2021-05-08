@@ -3,16 +3,20 @@ import { UserType } from '../users/dto/user-type';
 import { AuthService } from './auth.service';
 import { User } from '../users/user.entity';
 import { CtxUser } from '../decorators/ctx-user.decorator';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Resolver()
 export class AuthResolver {
 	constructor(private readonly authService: AuthService) {}
 
+	@UseGuards(JwtAuthGuard)
 	@Mutation(() => UserType)
 	public async login(@Args('email') email: string, @Args('password') password: string) {
 		return this.authService.login(email, password);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Mutation(() => UserType)
 	private async createUser(@CtxUser() user: User, @Args('email') email: string, @Args('password')
 		password: string): Promise<User> {

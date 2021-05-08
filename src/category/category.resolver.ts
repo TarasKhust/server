@@ -3,21 +3,23 @@ import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { FindCategories } from './dto/find-categories';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Resolver(() => Category)
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Mutation(() => Category)
-  createCategory(@Args('createCategoryInput') createCategoryInput: CreateCategoryInput): Promise<CreateCategoryInput> {
+	@UseGuards(JwtAuthGuard)
+	@Mutation(() => Category)
+	createCategory(@Args('createCategoryInput') createCategoryInput: CreateCategoryInput): Promise<CreateCategoryInput> {
 	return this.categoryService.createCategory(createCategoryInput);
-  }
+	}
 
-  @Query(() => [FindCategories], { name: 'categoryFindAll' })
-  async findAll(): Promise<{ id: number; title: string; disabled: boolean; value: number; label: string; children: any }[]> {
+	@Query(() => [FindCategories], { name: 'categoryFindAll' })
+	async findAll(): Promise<{ id: number; title: string; disabled: boolean; value: number; label: string; children: any }[]> {
 		const category = await this.categoryService.findAll();
 
 		const adapter = (data: Category[] = []): { id: number; title: string; disabled: boolean; value: number; label: string; children: any }[] => {
@@ -52,25 +54,27 @@ export class CategoryResolver {
 		};
 
 		return adapter(category);
-  }
+	}
 
-  @Query(() => Category, { name: 'categoryFindOne' })
-  async findOne(@Args('id', { type: () => Number }) id: number): Promise<Category | undefined> {
+	@Query(() => Category, { name: 'categoryFindOne' })
+	async findOne(@Args('id', { type: () => Number }) id: number): Promise<Category | undefined> {
 
 	  try {
 		  return await this.categoryService.findOne(id);
 	  } catch (error) {
 		  throw new NotFoundException(`Brand with id ${id} does not exist`);
 	  }
-  }
+	}
 
-  @Mutation(() => Category)
-  async updateCategory(@Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput): Promise<UpdateResult> {
+	@UseGuards(JwtAuthGuard)
+	@Mutation(() => Category)
+	async updateCategory(@Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput): Promise<UpdateResult> {
 	return this.categoryService.update(updateCategoryInput.id, updateCategoryInput);
-  }
+	}
 
-  @Mutation(() => Category)
-  async removeCategory(@Args('id', { type: () => Number }) id: number): Promise<DeleteResult> {
+	@UseGuards(JwtAuthGuard)
+	@Mutation(() => Category)
+	async removeCategory(@Args('id', { type: () => Number }) id: number): Promise<DeleteResult> {
 	return this.categoryService.remove(id);
-  }
+	}
 }

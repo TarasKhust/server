@@ -2,7 +2,7 @@ import {
 	Controller,
 	Post,
 	UseInterceptors,
-	UploadedFile, Get, Param, Res,
+	UploadedFile, Get, Param, Res, UseGuards,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -17,6 +17,7 @@ const readFileAsyc = promisify(readFile);
 import * as sharp from 'sharp';
 import { Observable, of } from 'rxjs';
 import { join } from 'path';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Crud({
 	model: {
@@ -37,6 +38,7 @@ export class FilesController implements CrudController<FileEntity> {
 		this.sizes = ['25X25', '50X50', '50X50', '200X200', '400X400', '900X900'];
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Post('upload')
 	@UseInterceptors(
 		FileInterceptor('image', {

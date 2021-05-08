@@ -10,6 +10,7 @@ import {
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BrandEntity } from '../brand/entities/brand.entity';
 import { Category } from '../category/entities/category.entity';
+import { Attribute } from '../attribute/entities/attribute.entity';
 
 @ObjectType()
 @Entity('product')
@@ -56,6 +57,13 @@ export class ProductEntity extends BaseEntity {
 	})
 	@JoinTable({ name: 'id' })
 	brand: BrandEntity;
+
+	@Field(() => Attribute)
+	@ManyToOne(() => Attribute, brand => brand.product, {
+		onDelete: 'CASCADE', onUpdate: 'CASCADE',
+	})
+	@JoinTable({ name: 'id' })
+	attribute: Attribute;
 
 	@Field(() => String)
 	@Column()
