@@ -7,8 +7,8 @@ export const graphqlConfig = (configService: ConfigService) => {
 	const dev = provision || development;
 
 	return {
-		debug: dev,
-		playground: dev,
+		debug: true,
+		playground: true,
 		installSubscriptionHandlers: true,
 		uploads: {
 			maxFileSize: 20000000, // 20 MB
