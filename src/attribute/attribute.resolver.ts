@@ -8,12 +8,12 @@ import { UpdateAttributeInput } from './dto/update-attribute.input';
 export class AttributeResolver {
   constructor(private readonly groupService: AttributeService) {}
 
-  @Mutation(() => AttributeEntity)
-  async createGroup(@Args('createGroupInput') createGroupInput: CreateAttributeInput): Promise<AttributeEntity> {
-    return this.groupService.create(createGroupInput);
+  @Mutation(() => AttributeEntity, { name: 'createAttribute' })
+  async createAttribute(@Args('createAttribute') createAttribute: CreateAttributeInput): Promise<CreateAttributeInput> {
+    return this.groupService.create(createAttribute);
   }
 
-  @Query(() => [AttributeEntity], { name: 'groupFindAll' })
+  @Query(() => [AttributeEntity], { name: 'attributeFindAll' })
   async findAll(): Promise<AttributeEntity[]> {
 	return this.groupService.findAll();
   }

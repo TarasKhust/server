@@ -42,11 +42,12 @@ export class AttributeGroupService {
 
   }
 
-  async findOne(id: GetAttributeGroupArgs): Promise<AttributeGroupEntity | undefined> {
+  async findOne(value: GetAttributeGroupArgs): Promise<AttributeGroupEntity | undefined> {
 	return this.attributeGroupRepository.findOne({
 		where: {
-			id,
+			id: value.id,
 		},
+		relations: ['product', 'attribute'],
 	});
   }
 

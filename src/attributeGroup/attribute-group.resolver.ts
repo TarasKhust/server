@@ -10,17 +10,17 @@ import { GetAttributeGroupArgs } from './dto/args/get-attribute-group.args';
 export class AttributeGroupResolver {
   constructor(private readonly attributeService: AttributeGroupService) {}
 
-  @Mutation(() => AttributeGroupEntity)
+  @Mutation(() => AttributeGroupEntity, { name: 'createAttributeGroup' })
   async createAttribute(@Args('createAttributeInput') createAttributeInput: CreateAttributeGroupInput): Promise<AttributeGroupEntity> {
 	return this.attributeService.create(createAttributeInput);
   }
 
-  @Query(() => [AttributeGroupEntity], { name: 'attributeFindAll' })
+  @Query(() => [AttributeGroupEntity], { name: 'attributeGroupFindAll' })
   async findAll(): Promise<AttributeGroupEntity[]> {
 	return this.attributeService.findAll();
   }
 
-  @Query(() => AttributeGroupEntity, { name: 'attributeFindOne' })
+  @Query(() => AttributeGroupEntity, { name: 'attributeGroupFindOne' })
   async findOne(@Args() getUserArg: GetAttributeGroupArgs): Promise<AttributeGroupEntity | undefined> {
 	return this.attributeService.findOne(getUserArg);
   }

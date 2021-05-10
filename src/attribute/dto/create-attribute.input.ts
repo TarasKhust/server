@@ -8,6 +8,6 @@ export class CreateAttributeInput {
   name: string;
 
   @Field(() => Number)
-  attribute: AttributeGroupEntity;
+  attributeGroup?: AttributeGroupEntity;
 
 }

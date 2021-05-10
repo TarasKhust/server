@@ -19,12 +19,12 @@ export class AttributeEntity {
 	onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
   })
   @JoinTable({ name: 'id' })
-  attributeGroup?: AttributeGroupEntity;
+  attribute_group?: AttributeGroupEntity;
 
   @Field(() => [ProductEntity], { nullable: true })
   @OneToMany(
 		() => ProductEntity,
-		(product: ProductEntity) => product.attributeGroup,
+		(product: ProductEntity) => product.attribute_group,
 		{ onUpdate: 'CASCADE', onDelete: 'CASCADE', nullable: true },
   )
   product: ProductEntity[];

@@ -11,6 +11,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { BrandEntity } from '../brand/entities/brand.entity';
 import { Category } from '../category/entities/category.entity';
 import { AttributeGroupEntity } from '../attributeGroup/entities/attribute-group.entity';
+import { AttributeEntity } from '../attribute/entities/attribute.entity';
 
 @ObjectType()
 @Entity('product')
@@ -55,26 +56,33 @@ export class ProductEntity extends BaseEntity {
 	@ManyToOne(() => BrandEntity, brand => brand.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	@JoinTable({ name: 'id' })
+	@JoinTable()
 	brand?: BrandEntity;
 
 	@Field(() => AttributeGroupEntity)
 	@ManyToOne(() => AttributeGroupEntity, attribute => attribute.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	@JoinTable({ name: 'id' })
-	attributeGroup?: AttributeGroupEntity;
+	@JoinTable()
+	attribute_group?: AttributeGroupEntity;
 
-	@Field(() => String)
-	@Column()
-	description: string;
+	@Field(() => AttributeEntity)
+	@ManyToOne(() => AttributeEntity, attribute => attribute.product, {
+		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
+	})
+	@JoinTable()
+	attribute?: AttributeEntity;
 
 	@Field(() => Category)
 	@ManyToOne(() => Category, category => category.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	@JoinTable({ name: 'id' })
+	@JoinTable()
 	category?: Category;
+
+	@Field(() => String)
+	@Column()
+	description: string;
 
 	@Field(() => [String])
 	@Column('simple-array')

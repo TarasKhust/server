@@ -20,12 +20,18 @@ export class AttributeService {
 
  async findAll(): Promise<AttributeEntity[]> {
 	return this.attributeRepository.find({
-        relations: ['product', 'attribute'],
-    });
+		relations: ['product', 'attribute_group'],
+	});
   }
 
-  findOne(id: number) {
-	return `This action returns a #${id} group`;
+  findOne(id: number): Promise<AttributeEntity> {
+	return this.attributeRepository.findOneOrFail({
+		where: {
+			id,
+		},
+		relations: ['attribute_group'],
+
+	});
   }
 
   update(id: number, updateGroupInput: UpdateAttributeInput) {

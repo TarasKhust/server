@@ -21,7 +21,7 @@ export class AttributeGroupEntity extends BaseEntity {
   @Field(() => [AttributeEntity], { nullable: true })
   @OneToMany(
 		() => AttributeEntity,
-		(product: AttributeEntity) => product.attributeGroup,
+		(product: AttributeEntity) => product.attribute_group,
 		{ onUpdate: 'CASCADE', onDelete: 'CASCADE', nullable: true },
   )
   attribute?: AttributeEntity[];
@@ -29,7 +29,7 @@ export class AttributeGroupEntity extends BaseEntity {
   @Field(() => [ProductEntity], { nullable: true })
   @OneToMany(
 		() => ProductEntity,
-		(product: ProductEntity) => product.attributeGroup,
+		(product: ProductEntity) => product.attribute_group,
 		{ onUpdate: 'CASCADE', onDelete: 'CASCADE', nullable: true },
   )
   product: ProductEntity[];
