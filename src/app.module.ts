@@ -16,6 +16,7 @@ import { ProductModule } from './product/product.module';
 import { BrandModule } from './brand/brand.module';
 import { FilesModule } from './files/files.module';
 import { AttributeModule } from './attribute/attribute.module';
+import { AttributeGroupModule } from './attributeGroup/attribute-group.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { AttributeModule } from './attribute/attribute.module';
 	BrandModule,
   	FilesModule,
   	AttributeModule,
+  	AttributeGroupModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,28 +1,31 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { IsEmpty, IsOptional, IsString } from 'class-validator';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductEntity } from '../../product/product.entity';
+import { AttributeGroupEntity } from '../../attributeGroup/entities/attribute-group.entity';
 
 @ObjectType()
 @Entity('attribute')
-export class Attribute extends BaseEntity {
-  @Field(() => Number)
+export class AttributeEntity {
   @PrimaryGeneratedColumn()
-  @IsOptional({ always: true })
+  @Field(() => Int)
   id: number;
 
+  @Column()
   @Field(() => String)
-  @Column({ length: 150 })
-  @IsString({ always: true })
-  @IsEmpty({ always: true, message: 'hey...' })
   name: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => AttributeGroupEntity)
+  @ManyToOne(() => AttributeGroupEntity, attribute => attribute.attribute, {
+	onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
+  })
+  @JoinTable({ name: 'id' })
+  attributeGroup?: AttributeGroupEntity;
+
+  @Field(() => [ProductEntity], { nullable: true })
   @OneToMany(
 		() => ProductEntity,
-		(product: ProductEntity) => product.image,
+		(product: ProductEntity) => product.attributeGroup,
 		{ onUpdate: 'CASCADE', onDelete: 'CASCADE', nullable: true },
   )
-  @JoinColumn({ name: 'id' })
   product: ProductEntity[];
 }

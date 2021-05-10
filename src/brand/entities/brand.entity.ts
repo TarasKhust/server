@@ -47,7 +47,7 @@ export class BrandEntity extends BaseEntity {
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => [ProductEntity], { nullable: true })
   @OneToMany(() => ProductEntity, (product: ProductEntity) => product.brand, {
 	nullable: true,
   })

@@ -10,7 +10,6 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 export class ProductResolver {
 	constructor(private readonly productService: ProductService) {}
 
-	@UseGuards(JwtAuthGuard)
 	@Mutation(() => ProductEntity)
 	async createProduct(@Args('data') createProductInput: CreateProductInput): Promise<CreateProductInput> {
 		return this.productService.create(createProductInput);

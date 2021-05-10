@@ -32,14 +32,18 @@ export class BrandService {
 	}
 
 	async findAll(): Promise<BrandEntity[]> {
-		return this.brandRepository.find();
+		return this.brandRepository.find({
+			relations: ['product'],
+		});
 	}
 
 	async findOne(id: string): Promise<BrandEntity | undefined> {
 		return this.brandRepository.findOne({
 			where: {
 				id,
+
 			},
+			relations: ['product'],
 		});
 	}
 

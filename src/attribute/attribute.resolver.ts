@@ -1,35 +1,35 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AttributeService } from './attribute.service';
-import { Attribute } from './entities/attribute.entity';
+import { AttributeEntity } from './entities/attribute.entity';
 import { CreateAttributeInput } from './dto/create-attribute.input';
 import { UpdateAttributeInput } from './dto/update-attribute.input';
 
-@Resolver(() => Attribute)
+@Resolver(() => AttributeEntity)
 export class AttributeResolver {
-  constructor(private readonly attributeService: AttributeService) {}
+  constructor(private readonly groupService: AttributeService) {}
 
-  @Mutation(() => Attribute)
-  createAttribute(@Args('createAttributeInput') createAttributeInput: CreateAttributeInput) {
-    return this.attributeService.create(createAttributeInput);
+  @Mutation(() => AttributeEntity)
+  async createGroup(@Args('createGroupInput') createGroupInput: CreateAttributeInput): Promise<AttributeEntity> {
+    return this.groupService.create(createGroupInput);
   }
 
-  @Query(() => [Attribute], { name: 'attribute' })
-  findAll() {
-    return this.attributeService.findAll();
+  @Query(() => [AttributeEntity], { name: 'groupFindAll' })
+  async findAll(): Promise<AttributeEntity[]> {
+	return this.groupService.findAll();
   }
 
-  @Query(() => Attribute, { name: 'attribute' })
+  @Query(() => AttributeEntity, { name: 'group' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.attributeService.findOne(id);
+    return this.groupService.findOne(id);
   }
 
-  @Mutation(() => Attribute)
-  updateAttribute(@Args('updateAttributeInput') updateAttributeInput: UpdateAttributeInput) {
-    return this.attributeService.update(updateAttributeInput.id, updateAttributeInput);
+  @Mutation(() => AttributeEntity)
+  updateGroup(@Args('updateGroupInput') updateGroupInput: UpdateAttributeInput) {
+    return this.groupService.update(updateGroupInput.id, updateGroupInput);
   }
 
-  @Mutation(() => Attribute)
-  removeAttribute(@Args('id', { type: () => Int }) id: number) {
-    return this.attributeService.remove(id);
+  @Mutation(() => AttributeEntity)
+  removeGroup(@Args('id', { type: () => Int }) id: number) {
+    return this.groupService.remove(id);
   }
 }

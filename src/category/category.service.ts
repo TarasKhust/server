@@ -37,6 +37,7 @@ export class CategoryService {
 			where: {
 				id,
 			},
+			relations: ['product'],
 		});
 	}
 

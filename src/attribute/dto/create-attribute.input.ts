@@ -1,7 +1,13 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
+import { AttributeGroupEntity } from '../../attributeGroup/entities/attribute-group.entity';
 
 @InputType()
 export class CreateAttributeInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+  @Field(() => String)
+  name: string;
+
+  @Field(() => Number)
+  attribute: AttributeGroupEntity;
+
 }
