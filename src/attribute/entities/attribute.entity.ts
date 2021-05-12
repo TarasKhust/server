@@ -18,7 +18,7 @@ export class AttributeEntity {
   @ManyToOne(() => AttributeGroupEntity, attribute => attribute.attribute, {
 	onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
   })
-  @JoinTable({ name: 'id' })
+  @JoinTable({ name: 'attribute_id' })
   attribute_group?: AttributeGroupEntity;
 
   @Field(() => [ProductEntity], { nullable: true })

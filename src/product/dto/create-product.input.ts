@@ -2,6 +2,7 @@ import { InputType, Field } from '@nestjs/graphql';
 import { BrandEntity } from '../../brand/entities/brand.entity';
 import { Category } from '../../category/entities/category.entity';
 import { AttributeGroupEntity } from '../../attributeGroup/entities/attribute-group.entity';
+import { AttributeEntity } from '../../attribute/entities/attribute.entity';
 
 @InputType('Product')
 export class CreateProductInput {
@@ -31,7 +32,10 @@ export class CreateProductInput {
 	category?: Category;
 
 	@Field(() => Number)
-	attributeGroup?: AttributeGroupEntity;
+	attribute_group?: AttributeGroupEntity;
+
+	@Field(() => Number)
+	attribute?: AttributeEntity;
 
 	@Field(() => [String])
 	tags: string[];

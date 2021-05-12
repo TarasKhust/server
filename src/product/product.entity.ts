@@ -5,7 +5,6 @@ import {
 	Entity, ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
-	JoinTable,
 } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BrandEntity } from '../brand/entities/brand.entity';
@@ -56,28 +55,24 @@ export class ProductEntity extends BaseEntity {
 	@ManyToOne(() => BrandEntity, brand => brand.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	@JoinTable()
 	brand?: BrandEntity;
 
 	@Field(() => AttributeGroupEntity)
 	@ManyToOne(() => AttributeGroupEntity, attribute => attribute.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	@JoinTable()
 	attribute_group?: AttributeGroupEntity;
 
 	@Field(() => AttributeEntity)
 	@ManyToOne(() => AttributeEntity, attribute => attribute.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	@JoinTable()
 	attribute?: AttributeEntity;
 
 	@Field(() => Category)
 	@ManyToOne(() => Category, category => category.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	@JoinTable()
 	category?: Category;
 
 	@Field(() => String)
