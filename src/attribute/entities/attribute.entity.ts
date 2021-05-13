@@ -21,7 +21,7 @@ export class AttributeEntity {
   @JoinTable({ name: 'attribute_id' })
   attribute_group?: AttributeGroupEntity;
 
-    @Field(() => ProductEntity)
+    @Field(() => [ProductEntity])
 	@ManyToMany(
 		() => ProductEntity,
 		(product: ProductEntity) => product.attribute, { nullable: true }

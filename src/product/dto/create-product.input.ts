@@ -33,10 +33,10 @@ export class CreateProductInput {
 	@Field(() => Number)
 	category?: Category;
 
-	@Field(() => [CreateAttributeGroup])
+	@Field(() => [CreateAttributeGroup], { nullable: true })
 	attribute_group?: AttributeGroupEntity[];
 
-	@Field(() => [CreateAttribute])
+	@Field(() => [CreateAttribute], { nullable: true })
 	attribute?: AttributeEntity[];
 
 	@Field(() => [String])
