@@ -33,7 +33,7 @@ export class ProductService {
 
 	async findAll(): Promise<ProductEntity[]> {
 		return this.productRepository.find({
-			relations: ['brand', 'category', 'attribute', 'attribute_group'],
+			relations: ['brand', 'category', 'attribute_group', 'attribute'],
 		});
 	}
 

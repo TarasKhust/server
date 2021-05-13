@@ -2,7 +2,7 @@ import {
 	BaseEntity,
 	Column,
 	CreateDateColumn,
-	Entity, ManyToOne,
+	Entity, JoinTable, ManyToMany, ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
@@ -57,17 +57,13 @@ export class ProductEntity extends BaseEntity {
 	})
 	brand?: BrandEntity;
 
-	@Field(() => AttributeGroupEntity)
-	@ManyToOne(() => AttributeGroupEntity, attribute => attribute.product, {
-		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
-	})
-	attribute_group?: AttributeGroupEntity;
+	@ManyToMany(() => AttributeGroupEntity, attribute_group => attribute_group.product, { cascade: true, nullable: true })
+	@JoinTable()
+	attribute_group: AttributeGroupEntity[];
 
-	@Field(() => AttributeEntity)
-	@ManyToOne(() => AttributeEntity, attribute => attribute.product, {
-		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
-	})
-	attribute?: AttributeEntity;
+	@ManyToMany(() => AttributeEntity, attribute => attribute.product, { cascade: true, nullable: true })
+	@JoinTable()
+	attribute?: AttributeEntity[];
 
 	@Field(() => Category)
 	@ManyToOne(() => Category, category => category.product, {

@@ -29,7 +29,7 @@ export class AttributeService {
 		where: {
 			id,
 		},
-		relations: ['attribute_group'],
+		relations: ['product', 'attribute_group'],
 
 	});
   }
