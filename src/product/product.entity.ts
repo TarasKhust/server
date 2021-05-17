@@ -59,7 +59,7 @@ export class ProductEntity extends BaseEntity {
 
 	@ManyToMany(() => AttributeGroupEntity, attribute_group => attribute_group.product, { cascade: true, nullable: true })
 	@JoinTable()
-	attribute_group: AttributeGroupEntity[];
+	attribute_group?: AttributeGroupEntity[];
 
 	@ManyToMany(() => AttributeEntity, attribute => attribute.product, { cascade: true, nullable: true })
 	@JoinTable()
