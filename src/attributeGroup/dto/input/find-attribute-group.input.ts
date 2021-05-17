@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsArray, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class FindAttributeGroupInput {
@@ -10,10 +10,5 @@ export class FindAttributeGroupInput {
 	@Field(() => String)
 	@IsNotEmpty()
 	name: string;
-
-	@Field(() => [String])
-	@IsNotEmpty()
-	@IsArray()
-	text: string[];
 
 }

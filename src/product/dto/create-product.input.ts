@@ -3,8 +3,8 @@ import { BrandEntity } from '../../brand/entities/brand.entity';
 import { Category } from '../../category/entities/category.entity';
 import { AttributeGroupEntity } from '../../attributeGroup/entities/attribute-group.entity';
 import { CreateAttributeGroup } from './create-attribute-group';
-import { AttributeEntity } from '../../attribute/entities/attribute.entity';
 import { CreateAttribute } from './create-attribute';
+import { AttributeEntity } from '../../attribute/entities/attribute.entity';
 
 @InputType('Product')
 export class CreateProductInput {

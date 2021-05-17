@@ -15,7 +15,9 @@ export class AttributeService {
 
   async create(createGroupInput: CreateAttributeInput): Promise<AttributeEntity> {
 
-	return this.attributeRepository.save(createGroupInput);
+	  const newAttribute = await this.attributeRepository.create(createGroupInput);
+
+	return this.attributeRepository.save(newAttribute);
   }
 
  async findAll(): Promise<AttributeEntity[]> {

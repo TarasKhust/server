@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateAttributeGroupInput } from './dto/input/update-attribute-group.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
@@ -15,23 +15,22 @@ export class AttributeGroupService {
   }
 
   async create(createAttribute: CreateAttributeGroupInput): Promise<AttributeGroupEntity> {
-	/*
-	 * const { name } = createAttribute;
-	 *
-	 * const getAttributeName = await this.attributeRepository.findOne({
-	 * 	where: {
-	 * 	name,
-	 * 	},
-	 * });
-	 *
-	 * if (getAttributeName) {
-	 * 	throw new NotFoundException(`This ${name} already exist`);
-	 * }
-	 *
-	 * const newAttribute = await this.attributeRepository.create(createAttribute);
-	 */
 
-	return this.attributeGroupRepository.save(createAttribute);
+	  const { name } = createAttribute;
+
+	  const getAttributeName = await this.attributeGroupRepository.findOne({
+	  	where: {
+	  	name,
+	  	},
+	  });
+
+	  if (getAttributeName) {
+	  	throw new NotFoundException(`This ${name} already exist`);
+	  }
+
+	  const newAttributeGroup = await this.attributeGroupRepository.create(createAttribute);
+
+	return this.attributeGroupRepository.save(newAttributeGroup);
   }
 
   async findAll(): Promise<AttributeGroupEntity[]> {
