@@ -52,4 +52,3 @@ tmp/
 .env.development
 .env.production
 .env.provision
-uploads/
