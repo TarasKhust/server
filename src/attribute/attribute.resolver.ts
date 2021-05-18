@@ -18,8 +18,8 @@ export class AttributeResolver {
 	return this.groupService.findAll();
   }
 
-  @Query(() => AttributeEntity, { name: 'group' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => AttributeEntity, { name: 'attributeFind' })
+  async findOne(@Args('id', { type: () => Int }) id: number): Promise<AttributeEntity> {
     return this.groupService.findOne(id);
   }
 

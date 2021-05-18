@@ -7,5 +7,6 @@ import { AttributeEntity } from './entities/attribute.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([AttributeEntity])],
   providers: [AttributeResolver, AttributeService],
+  exports: [AttributeService],
 })
 export class AttributeModule {}

@@ -61,7 +61,7 @@ export class ProductEntity extends BaseEntity {
 	@JoinTable()
 	attribute_group?: AttributeGroupEntity[];
 
-	@ManyToMany(() => AttributeEntity, attribute => attribute.product, { cascade: true, nullable: true })
+	@ManyToMany(() => AttributeEntity, attribute => attribute.product, { cascade: true, nullable: true, eager: true })
 	@JoinTable()
 	attribute?: AttributeEntity[];
 
@@ -98,5 +98,7 @@ export class ProductEntity extends BaseEntity {
 	@Field(() => Date)
 	@UpdateDateColumn({ nullable: true })
 	updatedAt: Date;
+
+	newAttribute: AttributeEntity[][];
 
 }

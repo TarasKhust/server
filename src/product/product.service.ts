@@ -4,12 +4,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateAttributeInput } from '../attribute/dto/update-attribute.input';
+import { AttributeService } from '../attribute/attribute.service';
 
 @Injectable()
 export class ProductService {
 	constructor(
 		@InjectRepository(ProductEntity)
-		private productRepository: Repository<ProductEntity>
+		private productRepository: Repository<ProductEntity>,
+		private attributeService: AttributeService
 	) {
 	}
 
@@ -38,12 +40,24 @@ export class ProductService {
 	}
 
 	async findById(id: string): Promise<ProductEntity | undefined> {
-		return this.productRepository.findOneOrFail({
+		const ola = await this.attributeService.findAll();
+
+		const product = await this.productRepository.findOneOrFail({
 			where: {
 				id,
 			},
 			relations: ['brand', 'category', 'attribute', 'attribute_group'],
 		});
+
+		const attribute = await product.attribute?.map(({ id }) => ola.filter((value) => value.id === id));
+
+		// @ts-ignore
+		console.log(...attribute);
+
+		// @ts-ignore
+		product.attribute = attribute;
+
+		return product;
 	}
 
 	async update(id: number, updateGroupInput: UpdateAttributeInput) {

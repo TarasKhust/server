@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IsEmpty, IsOptional, IsString } from 'class-validator';
 import { ProductEntity } from '../../product/product.entity';
 import { AttributeEntity } from '../../attribute/entities/attribute.entity';
@@ -19,8 +19,7 @@ export class AttributeGroupEntity extends BaseEntity {
   name: string;
 
   @Field(() => [AttributeEntity])
-  @ManyToMany(() => AttributeEntity, attribute => attribute.attribute_group, { cascade: true, nullable: true })
-  @JoinTable()
+  @ManyToMany(() => AttributeEntity, attribute => attribute.attribute_group, { nullable: true })
   attribute?: AttributeEntity[];
 
   @ManyToMany(() => ProductEntity, album => album.attribute_group, { nullable: true })
