@@ -31,7 +31,7 @@ export class ProductResolver {
 	}
 
 	@Query(() => ProductEntity)
-	async getProductById(@Args('id') id: string): Promise<ProductEntity | undefined> {
+	async getProductById(@Args('id') id: string): Promise<ProductEntity> {
 
 		try {
 			return await this.productService.findById(id);

@@ -5,6 +5,7 @@ import { DeleteResult, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateAttributeInput } from '../attribute/dto/update-attribute.input';
 import { AttributeService } from '../attribute/attribute.service';
+import { AttributeEntity } from '../attribute/entities/attribute.entity';
 
 @Injectable()
 export class ProductService {
@@ -39,8 +40,8 @@ export class ProductService {
 		});
 	}
 
-	async findById(id: string): Promise<ProductEntity | undefined> {
-		const ola = await this.attributeService.findAll();
+	async findById(id: string): Promise<ProductEntity> {
+		const attributeAll = await this.attributeService.findAll();
 
 		const product = await this.productRepository.findOneOrFail({
 			where: {
@@ -49,15 +50,27 @@ export class ProductService {
 			relations: ['brand', 'category', 'attribute', 'attribute_group'],
 		});
 
-		const attribute = await product.attribute?.map(({ id }) => ola.filter((value) => value.id === id));
-
-		// @ts-ignore
-		console.log(...attribute);
-
-		// @ts-ignore
-		product.attribute = attribute;
+		product.productAttribute = await this.adapterAttribute(attributeAll, product);
 
 		return product;
+	}
+
+	private adapterAttribute(attributeAll: AttributeEntity[], product: ProductEntity) {
+
+		const objectOfArray: { attribute_group: string; attribute: string; }[] = [];
+
+		attributeAll.filter(({ id }) => product.attribute?.find((value) => value.id === id)).forEach((attribute) => {
+			attribute.attribute_group.forEach((attribute_group) => {
+
+				objectOfArray.push(
+					{ attribute_group: attribute_group.name,
+						attribute: attribute.name }
+				);
+
+			});
+		});
+
+		return objectOfArray;
 	}
 
 	async update(id: number, updateGroupInput: UpdateAttributeInput) {

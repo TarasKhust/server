@@ -11,6 +11,7 @@ import { BrandEntity } from '../brand/entities/brand.entity';
 import { Category } from '../category/entities/category.entity';
 import { AttributeGroupEntity } from '../attributeGroup/entities/attribute-group.entity';
 import { AttributeEntity } from '../attribute/entities/attribute.entity';
+import { AttributeGroup } from './dto/attribute-group';
 
 @ObjectType()
 @Entity('product')
@@ -99,6 +100,7 @@ export class ProductEntity extends BaseEntity {
 	@UpdateDateColumn({ nullable: true })
 	updatedAt: Date;
 
-	newAttribute: AttributeEntity[][];
+	@Field(() => [AttributeGroup])
+	productAttribute: AttributeGroup[];
 
 }
