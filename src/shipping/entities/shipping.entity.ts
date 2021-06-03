@@ -36,7 +36,7 @@ export class Shipping {
 
   @Field(() => Customer)
   @ManyToOne(() => Customer, customer => customer.shipping,
-		{ cascade: true, nullable: true,
+		{ nullable: true,
   })
   customer: Customer;
 
