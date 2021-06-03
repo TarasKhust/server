@@ -18,6 +18,7 @@ import { FilesModule } from './files/files.module';
 import { AttributeModule } from './attribute/attribute.module';
 import { AttributeGroupModule } from './attributeGroup/attribute-group.module';
 import { CustomerModule } from './customer/customer.module';
+import { ShippingModule } from './shipping/shipping.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { CustomerModule } from './customer/customer.module';
   	AttributeModule,
   	AttributeGroupModule,
   	CustomerModule,
+  	ShippingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
