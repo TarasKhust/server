@@ -3,6 +3,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IsEmail, IsNumber, IsPhoneNumber, IsString } from 'class-validator';
 import { Shipping } from '../../shipping/entities/shipping.entity';
 import { Payment } from '../../payment/entities/payment.entity';
+import { Order } from '../../order/entities/order.entity';
 
 @ObjectType('customer')
 @Entity('customer')
@@ -39,5 +40,11 @@ export class Customer {
     nullable: true, cascade: true,
   })
   payment: Payment;
+
+  @Field(() => Order, { nullable: true })
+  @ManyToOne(() => Order, (order: Order) => order.customer, {
+    nullable: true, cascade: true,
+  })
+  order: Order;
 
 }

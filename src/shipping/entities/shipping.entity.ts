@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Customer } from '../../customer/entities/customer.entity';
+import { Order } from '../../order/entities/order.entity';
 
 @ObjectType('shipping')
 @Entity('shipping')
@@ -39,5 +40,11 @@ export class Shipping {
 		{ nullable: true,
   })
   customer: Customer[];
+
+  @Field(() => [Order])
+  @OneToMany(() => Order, order => order.shipping,
+		{ nullable: true,
+		})
+  order: Order[];
 
 }
