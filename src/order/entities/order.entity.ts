@@ -1,5 +1,13 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity, JoinTable, ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ProductEntity } from '../../product/product.entity';
 import { Customer } from '../../customer/entities/customer.entity';
 import { Shipping } from '../../shipping/entities/shipping.entity';
@@ -13,16 +21,17 @@ export class Order {
   @PrimaryGeneratedColumn()
   order_id: number;
 
-  @Field(() => [ProductEntity], { nullable: true })
-  @OneToMany(() => ProductEntity, (product: ProductEntity) => product.order, {
+  @Field(() => ProductEntity, { nullable: true })
+  @ManyToOne(() => ProductEntity, (product: ProductEntity) => product.order, {
 	nullable: true,
   })
-  product: ProductEntity[];
+  product: ProductEntity;
 
   @Field(() => [Customer], { nullable: true })
-  @OneToMany(() => Customer, (customer: Customer) => customer.order, {
-	nullable: true,
+  @ManyToMany(() => Customer, (customer: Customer) => customer.order, {
+	nullable: true, cascade: true,
   })
+  @JoinTable()
   customer: Customer[];
 
   @Field(() => [Shipping], { nullable: true })
@@ -46,5 +55,6 @@ export class Order {
   updatedAt: Date;
 
   @Field(() => Int)
+  @Column()
   total: number;
 }

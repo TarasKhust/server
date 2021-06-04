@@ -2,7 +2,7 @@ import {
 	BaseEntity,
 	Column,
 	CreateDateColumn,
-	Entity, JoinTable, ManyToMany, ManyToOne,
+	Entity, JoinTable, ManyToMany, ManyToOne, OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
@@ -73,11 +73,11 @@ export class ProductEntity extends BaseEntity {
 	})
 	category?: Category;
 
-	@Field(() => Order)
-	@ManyToOne(() => Order, order => order.product, {
+	@Field(() => [Order])
+	@OneToMany(() => Order, order => order.product, {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
-	order?: Order;
+	order?: Order[];
 
 	@Field(() => String)
 	@Column()
