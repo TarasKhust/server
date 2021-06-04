@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Customer } from '../../customer/entities/customer.entity';
 
 @ObjectType('payment')
@@ -13,10 +13,10 @@ export class Payment {
   @Column()
   name: string;
 
-  @Field(() => Customer, { nullable: true })
-  @ManyToOne(() => Customer, (customer) => customer.payment, {
-    nullable: true,
+  @Field(() => [Customer], { nullable: true })
+  @OneToMany(() => Customer, (customer) => customer.payment, {
+	nullable: true,
   })
-  customer: Customer;
+  customer: Customer[];
 
 }

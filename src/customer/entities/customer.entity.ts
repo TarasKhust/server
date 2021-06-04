@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { IsEmail, IsNumber, IsPhoneNumber, IsString } from 'class-validator';
 import { Shipping } from '../../shipping/entities/shipping.entity';
 import { Payment } from '../../payment/entities/payment.entity';
@@ -28,16 +28,16 @@ export class Customer {
   @Field(() => String)
   email: string;
 
-  @Field(() => [Shipping], { nullable: true })
-  @OneToMany(() => Shipping, (shipping: Shipping) => shipping.customer, {
+  @Field(() => Shipping, { nullable: true })
+  @ManyToOne(() => Shipping, (shipping: Shipping) => shipping.customer, {
 	nullable: true, cascade: true,
   })
-  shipping: Shipping[];
+  shipping: Shipping;
 
-  @Field(() => [Payment], { nullable: true })
-  @OneToMany(() => Payment, (payment: Payment) => payment.customer, {
+  @Field(() => Payment, { nullable: true })
+  @ManyToOne(() => Payment, (payment: Payment) => payment.customer, {
     nullable: true, cascade: true,
   })
-  payment: Payment[];
+  payment: Payment;
 
 }
