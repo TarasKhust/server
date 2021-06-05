@@ -5,7 +5,6 @@ import { DeleteResult, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateAttributeInput } from '../attribute/dto/update-attribute.input';
 import { AttributeService } from '../attribute/attribute.service';
-import { AttributeEntity } from '../attribute/entities/attribute.entity';
 
 @Injectable()
 export class ProductService {
@@ -29,6 +28,14 @@ export class ProductService {
 			throw new BadRequestException(`This ${vendor} already exist`);
 		}
 
+		const attribute = await this.checkIfAttributeExists(createProduct);
+
+		if (attribute.length > 0) {
+
+			// @ts-ignore
+			createProduct.attribute = attribute;
+		}
+
 		const newProduct = await this.productRepository.create(createProduct);
 
 		return this.productRepository.save(newProduct);
@@ -41,7 +48,6 @@ export class ProductService {
 	}
 
 	async findById(id: string): Promise<ProductEntity> {
-		const attributeAll = await this.attributeService.findAll();
 
 		const product = await this.productRepository.findOneOrFail({
 			where: {
@@ -50,12 +56,27 @@ export class ProductService {
 			relations: ['brand', 'category', 'attribute', 'attribute_group'],
 		});
 
-		product.productAttribute = await this.adapterAttribute(attributeAll, product);
+		product.productAttribute = await this.adapterAttribute(product);
 
 		return product;
 	}
 
-	private adapterAttribute(attributeAll: AttributeEntity[], product: ProductEntity) {
+	private async checkIfAttributeExists(createProduct: CreateProductInput) {
+		const attributeAll = await this.attributeService.findAll();
+
+		const arrayOfAttributes: {name?: string, id?: number, attribute_group?: { name?: string}}[] = [];
+
+		const a = attributeAll.filter((val) => createProduct.attribute?.find(({ name, attribute_group }) => name === val.name));
+
+		console.log(a);
+
+		return a;
+
+	}
+
+	private async adapterAttribute(product: ProductEntity) {
+
+		const attributeAll = await this.attributeService.findAll();
 
 		const objectOfArray: { attribute_group: string; attribute: string; }[] = [];
 

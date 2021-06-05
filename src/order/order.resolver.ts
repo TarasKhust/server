@@ -9,7 +9,7 @@ export class OrderResolver {
   constructor(private readonly orderService: OrderService) {}
 
   @Mutation(() => Order)
-  createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
+  async createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput): Promise<Order> {
     return this.orderService.create(createOrderInput);
   }
 
