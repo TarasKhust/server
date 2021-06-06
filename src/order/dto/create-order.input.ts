@@ -3,7 +3,12 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 import { CreateProductInput } from '../../product/dto/create-product.input';
 import { CreateCustomerInput } from '../../customer/dto/create-customer.input';
 import { CreatePaymentInput } from '../../payment/dto/create-payment.input';
-import { AddOrderProductId } from './add-order-product-id';
+
+@InputType()
+class AddOrderProductId {
+  @Field(() => String)
+  id: string;
+}
 
 @InputType()
 export class CreateOrderInput {
