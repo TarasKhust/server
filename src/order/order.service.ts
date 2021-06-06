@@ -14,7 +14,6 @@ export class OrderService {
   }
 
   public async create(createOrderInput: CreateOrderInput): Promise<Order> {
-    console.log(createOrderInput);
     const order = await this.orderRepository.create(createOrderInput);
 
 	return this.orderRepository.save(order);
@@ -22,7 +21,7 @@ export class OrderService {
 
   async findAll(): Promise<Order[]> {
     return this.orderRepository.find({
-      relations: ['payment'],
+      relations: ['payment', 'product', 'customer'],
     });
   }
 

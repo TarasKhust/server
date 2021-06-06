@@ -28,12 +28,27 @@ export class Order extends BaseEntity {
 	nullable: true, cascade: true,
   })
   @JoinTable()
-  customer: Customer;
+  customer: Customer[];
 
   @ManyToOne(() => Payment, (payment: Payment) => payment.order, {
 	nullable: true, cascade: true,
   })
   payment: Payment;
+
+  @Column({ nullable: true })
+  city?: string;
+
+  @Column({ nullable: true })
+  department?: string;
+
+  @Column({ nullable: true })
+  street?: string;
+
+  @Column({ nullable: true })
+  houseNumber?: string;
+
+  @Column({ nullable: true })
+  apartmentNumber?: string;
 
   @CreateDateColumn({ nullable: true })
   createdAt: Date;

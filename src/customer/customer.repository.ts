@@ -8,10 +8,12 @@ export class CustomerRepository extends Repository<Customer> {
 	public async createCustomer(
 		createCustomerInput: CreateCustomerInput,
 	): Promise<Customer> {
-		const { name, email, phone } = createCustomerInput;
+		const { firstName, email, phone, lastName, surName } = createCustomerInput;
 
 		const customer = new Customer();
-		customer.name = name;
+		customer.firstName = firstName;
+		customer.lastName = lastName;
+		customer.surName = surName;
 		customer.email = email;
 		customer.phone = phone;
 
@@ -23,9 +25,11 @@ export class CustomerRepository extends Repository<Customer> {
 		createCustomerInput: CreateCustomerInput,
 		editedCustomer: Customer,
 	): Promise<Customer> {
-		const { name, email, phone } = createCustomerInput;
+		const { firstName, lastName, surName, email, phone } = createCustomerInput;
 
-		editedCustomer.name = name;
+		editedCustomer.firstName = firstName;
+		editedCustomer.lastName = lastName;
+		editedCustomer.surName = surName;
 		editedCustomer.email = email;
 		editedCustomer.phone = phone;
 

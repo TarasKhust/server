@@ -1,5 +1,4 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { CreateShippingInput } from '../../shipping/dto/create-shipping.input';
 
 @InputType('CreateCustomerInput')
 export class CreateCustomerInput {
@@ -8,15 +7,18 @@ export class CreateCustomerInput {
   id?: number;
 
   @Field(() => String)
-  name: string;
+  firstName: string;
+
+  @Field(() => String)
+  lastName: string;
+
+  @Field(() => String)
+  surName: string;
 
   @Field(() => String)
   phone: string;
 
   @Field(() => String)
   email: string;
-
-  @Field(() => CreateShippingInput, { nullable: true })
-  shipping: CreateShippingInput;
 
 }
