@@ -1,26 +1,26 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType('CreateShipping')
 export class CreateShippingInput {
-  @Field(() => Int)
-  id: number;
+  @Field(() => Number)
+  id?: number;
 
-  @Field(() => String)
-  name: string;
+  @Field(() => String, { nullable: true })
+  name?: string;
 
-  @Field(() => String)
-  city: string;
+  @Field(() => String, { nullable: true })
+  city?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   department?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   street?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   houseNumber?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   apartmentNumber?: string;
 
 }
