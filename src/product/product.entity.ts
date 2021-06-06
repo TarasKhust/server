@@ -12,7 +12,6 @@ import { Category } from '../category/entities/category.entity';
 import { AttributeGroupEntity } from '../attributeGroup/entities/attribute-group.entity';
 import { AttributeEntity } from '../attribute/entities/attribute.entity';
 import { AttributeGroup } from './dto/attribute-group';
-import { Order } from '../order/entities/order.entity';
 
 @ObjectType()
 @Entity('product')
@@ -72,12 +71,6 @@ export class ProductEntity extends BaseEntity {
 		onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true,
 	})
 	category?: Category;
-
-	@Field(() => [Order], { nullable: true })
-	@ManyToMany(() => Order, order => order.product, {
-		nullable: true,
-	})
-	order?: Order[];
 
 	@Field(() => String)
 	@Column()

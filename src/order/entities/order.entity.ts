@@ -3,13 +3,13 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity, JoinTable, ManyToMany, ManyToOne,
+  Entity, JoinTable, ManyToMany, ManyToOne, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ProductEntity } from '../../product/product.entity';
 import { Customer } from '../../customer/entities/customer.entity';
 import { Payment } from '../../payment/entities/payment.entity';
+import { OrderProduct } from '../../order-product/entities/order-product.entity';
 
 @ObjectType('order')
 @Entity('order')
@@ -18,11 +18,10 @@ export class Order extends BaseEntity {
   @PrimaryGeneratedColumn()
   order_id: number;
 
-  @ManyToMany(() => ProductEntity, (product: ProductEntity) => product.order, {
+  @OneToMany(() => OrderProduct, (product) => product.order, {
 	nullable: true, cascade: true,
   })
-  @JoinTable()
-  product: ProductEntity[];
+  orderProduct: OrderProduct[];
 
   @ManyToMany(() => Customer, (customer: Customer) => customer.order, {
 	nullable: true, cascade: true,

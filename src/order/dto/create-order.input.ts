@@ -2,6 +2,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 import { CreateCustomerInput } from '../../customer/dto/create-customer.input';
 import { CreatePaymentInput } from '../../payment/dto/create-payment.input';
+import { CreateOrderProductInput } from '../../order-product/dto/create-order-product.input';
 
 @InputType()
 export class CreateOrderInput {
@@ -11,6 +12,9 @@ export class CreateOrderInput {
 
   @Field(() => Number)
   payment: CreatePaymentInput;
+
+  @Field(() => [CreateOrderProductInput])
+  orderProducts: CreateOrderProductInput[];
 
   @Field(() => String, { nullable: true })
   city?: string;
