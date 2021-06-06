@@ -13,9 +13,9 @@ export class OrderResolver {
     return this.orderService.create(createOrderInput);
   }
 
-  @Query(() => [Order], { name: 'order' })
-  findAll() {
-    return this.orderService.findAll();
+  @Query(() => [Order], { name: 'orderFindAll' })
+  async findAll(): Promise<Order[]> {
+	return this.orderService.findAll();
   }
 
   @Query(() => Order, { name: 'order' })

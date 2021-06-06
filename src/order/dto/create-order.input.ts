@@ -10,11 +10,11 @@ export class CreateOrderInput {
   @Field(() => [CreateProductInput], { nullable: true })
   product?: CreateProductInput[];
 
-  @Field(() => [CreateCustomerInput], { nullable: true })
-  customer: CreateCustomerInput[];
+  @Field(() => CreateCustomerInput, { nullable: true })
+  customer: CreateCustomerInput;
 
-  @Field(() => [CreatePaymentInput], { nullable: true })
-  payment: CreatePaymentInput[];
+  @Field(() => Number)
+  payment: CreatePaymentInput;
 
   @Field(() => Int)
   total: number;

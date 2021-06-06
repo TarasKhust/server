@@ -3,8 +3,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity, JoinTable, ManyToMany,
-  OneToMany,
+  Entity, JoinTable, ManyToMany, ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -29,12 +28,12 @@ export class Order extends BaseEntity {
 	nullable: true, cascade: true,
   })
   @JoinTable()
-  customer: Customer[];
+  customer: Customer;
 
-  @OneToMany(() => Payment, (payment: Payment) => payment.order, {
-	nullable: true,
+  @ManyToOne(() => Payment, (payment: Payment) => payment.order, {
+	nullable: true, cascade: true,
   })
-  payment: Payment[];
+  payment: Payment;
 
   @CreateDateColumn({ nullable: true })
   createdAt: Date;

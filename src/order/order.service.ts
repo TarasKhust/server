@@ -14,13 +14,16 @@ export class OrderService {
   }
 
   public async create(createOrderInput: CreateOrderInput): Promise<Order> {
+    console.log(createOrderInput);
     const order = await this.orderRepository.create(createOrderInput);
 
 	return this.orderRepository.save(order);
   }
 
-  findAll() {
-    return `This action returns all order`;
+  async findAll(): Promise<Order[]> {
+    return this.orderRepository.find({
+      relations: ['payment'],
+    });
   }
 
   findOne(id: number) {
