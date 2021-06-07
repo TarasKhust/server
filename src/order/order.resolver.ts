@@ -18,9 +18,9 @@ export class OrderResolver {
 	return this.orderService.findAll();
   }
 
-  @Query(() => Order, { name: 'order' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.orderService.findOne(id);
+  @Query(() => Order, { name: 'orderDetails' })
+  async findOne(@Args('id', { type: () => Int }) id: number): Promise<Order | undefined> {
+	return this.orderService.findOne(id);
   }
 
   @Mutation(() => Order)

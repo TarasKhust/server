@@ -9,31 +9,38 @@ import { CreateOrderInput } from './dto/create-order.input';
 export class OrderService {
 
   constructor(@InjectRepository(Order)
-              private orderRepository: Repository<Order>) {
+				private orderRepository: Repository<Order>) {
 
   }
 
   public async create(createOrderInput: CreateOrderInput): Promise<Order> {
-    const order = await this.orderRepository.create(createOrderInput);
+	const order = await this.orderRepository.create(createOrderInput);
 
 	return this.orderRepository.save(order);
   }
 
   async findAll(): Promise<Order[]> {
-    return this.orderRepository.find({
-      relations: ['payment', 'customer', 'orderProducts'],
-    });
+	return this.orderRepository.find({
+		relations: ['payment', 'customer', 'orderProducts'],
+	});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: number): Promise<Order | undefined> {
+	return this.orderRepository.findOne({
+		where: {
+		order_id: id,
+
+		},
+		relations: ['payment', 'customer', 'orderProducts'],
+	});
+
   }
 
   update(id: number, updateOrderInput: UpdateOrderInput) {
-    return `This action updates a #${id} order`;
+	return `This action updates a #${id} order`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} order`;
+	return `This action removes a #${id} order`;
   }
 }
