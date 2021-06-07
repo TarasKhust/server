@@ -14,7 +14,12 @@ import { AttributeEntity } from '../attribute/entities/attribute.entity';
 import { AttributeGroup } from './dto/attribute-group';
 
 @ObjectType()
-@Entity('product')
+@Entity('product', {
+	orderBy: {
+		name: 'ASC',
+		id: 'DESC',
+	},
+})
 export class ProductEntity extends BaseEntity {
 	@Field(() => String)
 	@PrimaryGeneratedColumn('uuid')

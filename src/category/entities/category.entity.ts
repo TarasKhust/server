@@ -3,7 +3,12 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { ProductEntity } from '../../product/product.entity';
 
 @ObjectType()
-@Entity()
+@Entity({
+  orderBy: {
+	name: 'ASC',
+	id: 'DESC',
+  },
+})
 export class Category extends BaseEntity {
   @Field(() => Number)
   @PrimaryGeneratedColumn()

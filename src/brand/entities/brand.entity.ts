@@ -11,7 +11,12 @@ import { ProductEntity } from '../../product/product.entity';
 import { IsString, MinLength } from 'class-validator';
 
 @ObjectType()
-@Entity('brand')
+@Entity('brand', {
+  orderBy: {
+	name: 'ASC',
+	id: 'DESC',
+  },
+})
 export class BrandEntity extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
