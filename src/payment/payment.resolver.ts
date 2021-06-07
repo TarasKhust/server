@@ -13,8 +13,8 @@ export class PaymentResolver {
     return this.paymentService.create(createPaymentInput);
   }
 
-  @Query(() => [Payment], { name: 'payment' })
-  findAll() {
+  @Query(() => [Payment], { name: 'paymentFindAll' })
+  async findAll(): Promise<Payment[]> {
     return this.paymentService.findAll();
   }
 
