@@ -17,6 +17,12 @@ import { BrandModule } from './brand/brand.module';
 import { FilesModule } from './files/files.module';
 import { AttributeModule } from './attribute/attribute.module';
 import { AttributeGroupModule } from './attributeGroup/attribute-group.module';
+import { CustomerModule } from './customer/customer.module';
+import { ShippingModule } from './shipping/shipping.module';
+import { PaymentModule } from './payment/payment.module';
+import { OrderModule } from './order/order.module';
+import { OrderProductModule } from './order-product/order-product.module';
+import { OrderStatusModule } from './order-status/order-status.module';
 
 @Module({
   imports: [
@@ -49,6 +55,12 @@ import { AttributeGroupModule } from './attributeGroup/attribute-group.module';
   	FilesModule,
   	AttributeModule,
   	AttributeGroupModule,
+  	CustomerModule,
+  	ShippingModule,
+  	PaymentModule,
+  	OrderModule,
+  	OrderProductModule,
+  	OrderStatusModule,
   ],
   controllers: [AppController],
   providers: [AppService],
