@@ -9,7 +9,7 @@ export class OrderStatus {
   @PrimaryGeneratedColumn()
   orderStatusId: number;
 
-  @Column()
+  @Column({ default: 'Ожидание' })
   name: string;
 
   @OneToMany(() => Order, (order) => order.orderStatus)
