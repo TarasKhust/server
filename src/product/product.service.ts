@@ -28,13 +28,15 @@ export class ProductService {
 			throw new BadRequestException(`This ${vendor} already exist`);
 		}
 
-		const attribute = await this.checkIfAttributeExists(createProduct);
-
-		if (attribute.length > 0) {
-
-			// @ts-ignore
-			createProduct.attribute = attribute;
-		}
+		/*
+		 * const attribute = await this.checkIfAttributeExists(createProduct);
+		 *
+		 * if (attribute.length > 0) {
+		 *
+		 * 	// @ts-ignore
+		 * 	createProduct.attribute = attribute;
+		 * }
+		 */
 
 		const newProduct = await this.productRepository.create(createProduct);
 
