@@ -10,6 +10,7 @@ import {
 import { Customer } from '../../customer/entities/customer.entity';
 import { Payment } from '../../payment/entities/payment.entity';
 import { OrderProduct } from '../../order-product/entities/order-product.entity';
+import { OrderStatus } from '../../order-status/entities/order-status.entity';
 
 @ObjectType('order')
 @Entity('order')
@@ -34,6 +35,11 @@ export class Order extends BaseEntity {
 	nullable: true, cascade: true,
   })
   payment: Payment;
+
+  @ManyToOne(() => OrderStatus, (status: OrderStatus) => status.order, {
+    nullable: true, cascade: true,
+  })
+  orderStatus: OrderStatus;
 
   @Column({ nullable: true })
   city?: string;
