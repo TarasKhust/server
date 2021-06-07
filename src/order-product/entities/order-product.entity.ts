@@ -1,26 +1,21 @@
 import { ObjectType } from '@nestjs/graphql';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from '../../order/entities/order.entity';
 
-@Entity('orderProduct')
-@ObjectType('orderProduct')
+@Entity('orderProducts')
+@ObjectType('orderProducts')
 export class OrderProduct {
   @PrimaryGeneratedColumn()
   orderProductId: number;
 
-  @ManyToOne(() => Order, (order) => order.orderProduct, {
-    nullable: true,
-  })
-  order: Order;
-
   @Column()
-  product_id: number;
+  product_id: string;
 
   @Column()
   name: string;
 
   @Column()
-  model: number;
+  vendor: string;
 
   @Column()
   quantity: number;
@@ -30,4 +25,9 @@ export class OrderProduct {
 
   @Column()
   total: number;
+
+  @ManyToMany(() => Order, (order: Order) => order.orderProducts, {
+    nullable: true,
+  })
+  order: Order[];
 }
