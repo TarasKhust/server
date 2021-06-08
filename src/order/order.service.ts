@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UpdateOrderInput } from './dto/update-order.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateOrderInput } from './dto/create-order.input';
 
 @Injectable()
@@ -40,7 +40,8 @@ export class OrderService {
 	return `This action updates a #${id} order`;
   }
 
-  remove(id: number) {
-	return `This action removes a #${id} order`;
+  async remove(id: number): Promise<DeleteResult> {
+	  return this.orderRepository.delete(id);
   }
+
 }

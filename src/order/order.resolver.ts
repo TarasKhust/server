@@ -3,6 +3,7 @@ import { OrderService } from './order.service';
 import { Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
+import { DeleteResult } from 'typeorm';
 
 @Resolver(() => Order)
 export class OrderResolver {
@@ -29,7 +30,7 @@ export class OrderResolver {
   }
 
   @Mutation(() => Order)
-  removeOrder(@Args('id', { type: () => Int }) id: number) {
+  async removeOrder(@Args('id', { type: () => Int }) id: number): Promise<DeleteResult> {
     return this.orderService.remove(id);
   }
 }
