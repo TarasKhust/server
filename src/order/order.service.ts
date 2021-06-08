@@ -21,7 +21,7 @@ export class OrderService {
 
   async findAll(): Promise<Order[]> {
 	return this.orderRepository.find({
-		relations: ['payment', 'customer', 'orderProducts'],
+		relations: ['payment', 'customer', 'orderProducts', 'orderStatus'],
 	});
   }
 
@@ -31,7 +31,7 @@ export class OrderService {
 		order_id: id,
 
 		},
-		relations: ['payment', 'customer', 'orderProducts'],
+		relations: ['payment', 'customer', 'orderProducts', 'orderStatus'],
 	});
 
   }

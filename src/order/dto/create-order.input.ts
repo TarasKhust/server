@@ -3,6 +3,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 import { CreateCustomerInput } from '../../customer/dto/create-customer.input';
 import { CreatePaymentInput } from '../../payment/dto/create-payment.input';
 import { CreateOrderProductInput } from '../../order-product/dto/create-order-product.input';
+import { CreateOrderStatusInput } from '../../order-status/dto/create-order-status.input';
 
 @InputType()
 export class CreateOrderInput {
@@ -15,6 +16,9 @@ export class CreateOrderInput {
 
   @Field(() => [CreateOrderProductInput])
   orderProducts: CreateOrderProductInput[];
+
+  @Field(() => Number)
+  orderStatus: CreateOrderStatusInput;
 
   @Field(() => String, { nullable: true })
   city?: string;
