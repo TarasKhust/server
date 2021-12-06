@@ -4,7 +4,7 @@
   "description": "",
   "author": "Taras Rushchak",
   "private": true,
-  "license": "Personal License",
+  "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
