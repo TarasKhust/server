@@ -1,4 +1,4 @@
-<p align="center">
+<p align="left">
     Backand for Client https://github.com/TarasKhust/client
     Backand for CRM https://github.com/TarasKhust/crm
 </p>
