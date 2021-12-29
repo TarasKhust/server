@@ -42,7 +42,7 @@ $ npm run test:cov
 ## Stay in touch
 
 - Author - [Taras Rushchak](https://www.linkedin.com/in/tarasrushchak/)
-- Website - [https://clientfront.herokuapp.com/](https://clientfront.herokuapp.com/)
+- API - [https://servercrm.herokuapp.com/](https://servercrm.herokuapp.com/)
 
 ## License
 
