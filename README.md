@@ -1,5 +1,6 @@
 <p align="center">
-    Backand for Client
+    Backand for Client https://github.com/TarasKhust/client
+    Backand for CRM https://github.com/TarasKhust/crm
 </p>
 
 ## Description
