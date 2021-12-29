@@ -11,6 +11,7 @@ This project is Use Framework Nest.js
 
 ```bash
 $ npm install
+$ docker-compose up postgres
 ```
 
 ## Running the app
@@ -43,6 +44,7 @@ $ npm run test:cov
 
 - Author - [Taras Rushchak](https://www.linkedin.com/in/tarasrushchak/)
 - API - [https://servercrm.herokuapp.com/](https://servercrm.herokuapp.com/)
+- API-LocalHost - [http://localhost:3000/](http://localhost:3000/)
 
 ## License
 
